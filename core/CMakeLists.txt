@@ -1,0 +1,4 @@
+set(SUBPROJECT_NAME ${PROJECT_NAME}Core)
+file(GLOB_RECURSE SRC_LIST *.cpp *.h)
+add_library(${SUBPROJECT_NAME} ${SRC_LIST})
+target_include_directories(${SUBPROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
