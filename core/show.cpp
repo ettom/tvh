@@ -155,7 +155,7 @@ void Show::add_to_tracker_file()
 
 void Show::add_to_history_file()
 {
-	std::vector<std::string> history_contents = readfile(TV_HISTORY_FILE); // Read the current file contents
+	std::vector<std::string> history_contents = readfile(settings.TV_HISTORY_FILE); // Read the current file contents
 
 	std::regex rgx = std::regex(".*" + series_name + ".*");
 	std::string to_delete = "";
@@ -171,8 +171,8 @@ void Show::add_to_history_file()
 	history_contents.insert(history_contents.begin(), this->next_ep_parent_dir);
 
 	// Keep the number of lines at specified length
-	if (history_contents.size() > HISTORY_SIZE)
-		history_contents.resize(HISTORY_SIZE);
+	if (history_contents.size() > settings.HISTORY_SIZE)
+		history_contents.resize(settings.HISTORY_SIZE);
 
-	write_file(TV_HISTORY_FILE, history_contents);
+	write_file(settings.TV_HISTORY_FILE, history_contents);
 }

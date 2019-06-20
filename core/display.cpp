@@ -1,7 +1,5 @@
 #include "display.h"
 
-extern int LIST_LENGTH;
-
 Display::Display(std::map<int, Show> m) 	// Constructor
 {
 	this->showmap = m;
@@ -46,7 +44,7 @@ void Display::print_menu(int to_highlight)
 	int i = 0;
 	char item[NAME_MAX]; // Max filename length, probably 255
 
-	for(i = 0; i < LIST_LENGTH; i++) {
+	for(i = 0; i < settings.LIST_LENGTH; i++) {
 		(i == to_highlight) ? wattron(w, A_STANDOUT) : wattroff(w, A_STANDOUT);
 		sprintf(item, "%-7s",  this->list.at(static_cast<size_t>(i)).c_str());
 		mvwprintw(w, i + 1, 2, "%s", item);
@@ -113,11 +111,11 @@ void Display::draw_window()
 			goto exit_loop;
 		case KEY_UP: case 'k':
 			i--;
-			i = (i < 0) ? LIST_LENGTH - 1 : i;
+			i = (i < 0) ? settings.LIST_LENGTH - 1 : i;
 			break;
 		case KEY_DOWN: case 'j':
 			i++;
-			i = (i > LIST_LENGTH - 1) ? 0 : i;
+			i = (i > settings.LIST_LENGTH - 1) ? 0 : i;
 			break;
 		case KEY_RIGHT: case 'l':
 			showmap.at(i).set_next_ep_path();                   // Set the next episode for the object

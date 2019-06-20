@@ -1,5 +1,7 @@
 #include "helpers.h"
 
+
+
 std::string remove_extension(const std::string& filename) {
 	size_t lastdot = filename.find_last_of(".");
 	if (lastdot == std::string::npos)
@@ -55,7 +57,7 @@ int run_ext_cmd(const std::string& cmd)
 
 void play_video(const std::string& path_to_file)
 {
-	const std::string& cmd = "setsid " + VIDEO_PLAYER + " \"" + path_to_file + "\" > /dev/null 2>&1 &";
+	const std::string& cmd = "setsid " + settings.VIDEO_PLAYER + " \"" + path_to_file + "\" > /dev/null 2>&1 &";
 	run_ext_cmd(cmd);
 }
 
@@ -112,7 +114,7 @@ std::string find_match_in_dir(const std::vector<std::string>& input, const std::
 {
 	std::regex rgx = std::regex(".*" + to_search + ".*");
 	for (auto i : input) {
-		if (std::regex_match(i, rgx) && !ending_in(i, extensions_to_ignore))
+		if (std::regex_match(i, rgx) && !ending_in(i, settings.extensions_to_ignore))
 			return i;
 	}
 

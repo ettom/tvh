@@ -8,11 +8,13 @@
 #include <regex>
 
 #include "helpers.h"
+#include "config.h"
 
 extern std::string TV_HISTORY_FILE;
 extern const size_t HISTORY_SIZE;
 std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>&);
 std::string find_last_played(const std::string&);
+
 
 
 class Show

@@ -9,29 +9,9 @@
 #include "show.h"
 #include "helpers.h"
 #include "display.h"
+#include "init_history.h"
 
-const std::string& VIDEO_PLAYER = "mpv";
-const std::vector<std::string> extensions_to_ignore {"sub", "srt", "ass"};
-const size_t HISTORY_SIZE = 5;
-
-std::string TV_HISTORY_FILE;
-int LIST_LENGTH = 0;
-
-std::map<int, Show> create_shows()
-{
-	// Create show objects for every directory name in the history file
-	std::map<int, Show> all_shows;
-
-	std::vector<std::string> lines = readfile(TV_HISTORY_FILE);
-	for (std::string line : lines) {
-		Show show(line, LIST_LENGTH);  // Create show object
-		all_shows[LIST_LENGTH] = show; // Assign to map where key is the current line number and object is the value
-
-		LIST_LENGTH++;
-	}
-
-	return all_shows;
-}
+extern Settings settings;
 
 void launch_menu()
 {
@@ -51,7 +31,7 @@ void launch_menu()
 int main(int argc, char *argv[])
 {
 	std::string env_HOME = std::getenv("HOME");
-	TV_HISTORY_FILE = env_HOME + "/.local/share/tvhistory";
+	settings.TV_HISTORY_FILE = env_HOME + "/.local/share/tvhistory";
 
 	if (argc > 1) { // If a filename is passed
 		std::string path_to_file;

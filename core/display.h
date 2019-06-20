@@ -12,7 +12,9 @@
 
 #include "show.h"
 #include "helpers.h"
+#include "config.h"
 
+extern Settings settings;
 
 class Display
 {
