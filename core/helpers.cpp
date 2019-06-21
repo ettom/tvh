@@ -37,13 +37,13 @@ int write_file(const std::string& filename, const std::vector<std::string>& to_w
 
 std::vector<std::string> reverse_file_path(const std::string& input)
 {
-	// Create a reversed vector out of an absolute path
-	// Example: /home/mypath/file.txt -> file.txt, mypath, home
 	std::istringstream string_stream(input);
+
 	std::string line;
 	std::vector<std::string> lines;
 	while (std::getline(string_stream, line, '/')) {
-		lines.push_back(line);
+		if (!line.empty())
+			lines.push_back(line);
 	}
 	std::reverse(lines.begin(),lines.end());
 	return lines;

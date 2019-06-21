@@ -22,6 +22,7 @@ std::string extract_substring(const std::string& input, const std::regex& rgx);
 std::string find_match_in_dir(const std::vector<std::string>& input, const std::string& substr);
 std::string get_parent_dir(const std::string& path);
 std::string get_absolute_path(const std::string& path);
+bool ending_in(const std::string& filename, const std::vector<std::string>& endings);
 
 
 void play_video(const std::string& path_to_file);

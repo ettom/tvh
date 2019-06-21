@@ -11,7 +11,7 @@
 #include "display.h"
 #include "init_history.h"
 
-extern Settings settings;
+Settings settings;
 
 void launch_menu()
 {
