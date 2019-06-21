@@ -1,7 +1,5 @@
 #include "helpers.h"
 
-
-
 std::string remove_extension(const std::string& filename) {
 	size_t lastdot = filename.find_last_of(".");
 	if (lastdot == std::string::npos)
@@ -102,7 +100,7 @@ std::string extract_substring(const std::string& input, const std::regex& rgx)
 }
 
 // Check if filename ends in one of the given filenames
-bool ending_in(const std::string& filename, const std::vector<std::string>& endings)
+bool ends_in(const std::string& filename, const std::vector<std::string>& endings)
 {
 	bool ends_in;
 	for (auto ending : endings) {
@@ -132,7 +130,7 @@ std::vector<std::string> filter_filenames_by_extension(const std::vector<std::st
 {
 	std::vector<std::string> result;
 	for (auto i : filenames) {
-		if (!ending_in(i, extensions_to_ignore))
+		if (!ends_in(i, extensions_to_ignore))
 			result.push_back(i);
 	}
 

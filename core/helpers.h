@@ -21,7 +21,7 @@ std::vector<std::string> find_matches_in_dir(const std::vector<std::string>& inp
 std::vector<std::string> filter_filenames_by_extension(const std::vector<std::string>& filenames, const std::vector<std::string>& extensions_to_ignore);
 std::string get_parent_dir(const std::string& path);
 std::string get_absolute_path(const std::string& path);
-bool ending_in(const std::string& filename, const std::vector<std::string>& endings);
+bool ends_in(const std::string& filename, const std::vector<std::string>& endings);
 
 
 void play_video(const std::string& video_player, const std::string& path_to_file);
