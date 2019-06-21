@@ -88,3 +88,16 @@ TEST(Helpers, givenAStringAndRegex_callingExtractSubstring_mustReturnMatchingSub
 	//ASSERT
 	ASSERT_EQ(result, "test");
 }
+
+TEST(Helpers, givenReversedPathAsVector_callingExtractSeriesNameSeason_mustReturnTupleOfSeriesNameAndSeasonNumber){
+	// ARRANGE
+	std::vector<std::string> input {"S01", "myshow", "shows"};
+
+	// ACT
+	std::tuple<std::string, std::string> result = extract_series_name_season(input);
+
+	//ASSERT
+	ASSERT_EQ(std::get<0>(result), "myshow");
+	ASSERT_EQ(std::get<1>(result), "S01");
+}
+
