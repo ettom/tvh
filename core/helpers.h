@@ -24,5 +24,6 @@ std::string get_absolute_path(const std::string& path);
 bool ending_in(const std::string& filename, const std::vector<std::string>& endings);
 
 
-void play_video(std::string video_player, const std::string& path_to_file);
+void play_video(const std::string& video_player, const std::string& path_to_file);
+void open_dir_in_file_manager(const std::string& file_manager, const std::string& dir_path);
 int run_ext_cmd(const std::string& cmd);

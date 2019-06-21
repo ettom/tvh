@@ -143,6 +143,12 @@ void Display::draw_window()
 			print_menu(i);
 			continue;
 			break;
+		case 'f':
+			std::string dir = showmap.at(i).get_season_dir_path();
+			open_dir_in_file_manager(settings.FILE_MANAGER, dir);;
+			print_menu(i);
+			continue;
+			break;
 		}
 
 		wattron(w, A_STANDOUT); // now highlight the next item in the list.

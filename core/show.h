@@ -19,8 +19,8 @@ std::string find_last_played(const std::string&);
 class Show
 {
 	public:
-		Show();                                                                   // Default constructor
-		Show(Settings settings, std::string next_ep_path);                        // Constructor for passing a filename
+		Show();                                                                // Default constructor
+		Show(Settings settings, std::string next_ep_path);                     // Constructor for passing a filename
 		Show(Settings settings, std::string season_dir_path, int line_number); // Constructor for passing the season dir and a menu position
 		std::string get_series_name();
 		std::string get_season_number();
