@@ -32,10 +32,10 @@ int main(int argc, char *argv[])
 		play_video(settings.VIDEO_PLAYER, path_to_file);
 
 		std::regex rgx(".*E([0-9]+).*");
-		if (std::regex_match(path_to_file, rgx)) {        // If path is an ep file
+		if (std::regex_match(path_to_file, rgx)) { // If path is an ep file
 			Show show(settings, path_to_file); // Create show object
-			show.add_to_tracker_file();               // Write filename to .tracker file in same dir
-			show.add_to_history_file();               // Write the dir of the file to the global history file
+			show.add_to_tracker_file();        // Write filename to .tracker file in same dir
+			show.add_to_history_file();        // Write the dir of the file to the global history file
 		}
 	} else {
 		launch_menu(settings);

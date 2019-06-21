@@ -1,31 +1,5 @@
 #include "show.h"
 
-std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>& lines)
-{
-	std::string series_name;
-	std::string season;
-
-	std::regex r("S[0-9]{2}.*");              // If string starts with Sxx, it's the season dir
-
-	int season_seen = 0;
-	for (auto line : lines) {
-
-		if (season_seen) {                // If we have seen the season number, assume the next dir is the name of the show
-			series_name = line;
-			break;
-		}
-		if (std::regex_match (line, r)) { // Check if line is a season dir
-			season = line;
-			season_seen = 1;
-		} else {
-			series_name = line;       // If it's not, assume it's the name of the show
-			season = "S01";           // Therefore the show only has one season, set season number to S01
-			break;
-		}
-	}
-
-	return std::make_tuple(series_name, season);
-}
 
 std::string find_last_played(const std::string& season_dir_path)
 {
@@ -64,8 +38,11 @@ Show::Show(Settings s, std::string p, int n)
 Show::Show(Settings s, std::string p)
 {
 	this->settings = s;
-	this->tv_history_file = settings.tv_history_file;
 	this->next_ep_path = p;
+
+	this->tv_history_file = settings.tv_history_file;
+	this->extensions_to_ignore = settings.extensions_to_ignore;
+
 	this->next_ep_parent_dir = get_parent_dir(this->next_ep_path);
 
 	const std::vector<std::string>& lines = reverse_file_path(next_ep_parent_dir);
