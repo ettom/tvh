@@ -1,8 +1,10 @@
 #include "display.h"
 
-Display::Display(std::map<int, Show> m) 	// Constructor
+Display::Display(Settings s, std::map<int, Show> m, size_t n) 	// Constructor
 {
+	this->settings = s;
 	this->showmap = m;
+	this->list_length = n;
 	this->list = format_lines();
 }
 
@@ -44,7 +46,7 @@ void Display::print_menu(int to_highlight)
 	int i = 0;
 	char item[NAME_MAX]; // Max filename length, probably 255
 
-	for(i = 0; i < settings.LIST_LENGTH; i++) {
+	for(i = 0; i < this->list_length; i++) {
 		(i == to_highlight) ? wattron(w, A_STANDOUT) : wattroff(w, A_STANDOUT);
 		sprintf(item, "%-7s",  this->list.at(static_cast<size_t>(i)).c_str());
 		mvwprintw(w, i + 1, 2, "%s", item);
@@ -111,11 +113,11 @@ void Display::draw_window()
 			goto exit_loop;
 		case KEY_UP: case 'k':
 			i--;
-			i = (i < 0) ? settings.LIST_LENGTH - 1 : i;
+			i = (i < 0) ? this->list_length - 1 : i;
 			break;
 		case KEY_DOWN: case 'j':
 			i++;
-			i = (i > settings.LIST_LENGTH - 1) ? 0 : i;
+			i = (i > this->list_length - 1) ? 0 : i;
 			break;
 		case KEY_RIGHT: case 'l':
 			showmap.at(i).set_next_ep_path();                   // Set the next episode for the object
@@ -127,7 +129,7 @@ void Display::draw_window()
 			} else {
 				showmap.at(i).add_to_tracker_file();
 				showmap.at(i).add_to_history_file();
-				play_video(next_ep_path);
+				play_video(settings.VIDEO_PLAYER, next_ep_path);
 			}
 			goto exit_loop;
 		case 'i': case 'p':

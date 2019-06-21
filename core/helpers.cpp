@@ -55,9 +55,9 @@ int run_ext_cmd(const std::string& cmd)
 	return status;
 }
 
-void play_video(const std::string& path_to_file)
+void play_video(std::string video_player, const std::string& path_to_file)
 {
-	const std::string& cmd = "setsid " + settings.VIDEO_PLAYER + " \"" + path_to_file + "\" > /dev/null 2>&1 &";
+	const std::string& cmd = "setsid " + video_player + " \"" + path_to_file + "\" > /dev/null 2>&1 &";
 	run_ext_cmd(cmd);
 }
 
@@ -79,7 +79,7 @@ std::string calculate_next(int last_number)
 	std::string next_as_string = "";
 	last_number++;
 	if (last_number < 10)
-		next_as_string += "0"; // Episode name must always contain two numbers eg. E01 not E1
+		next_as_string += "0";
 
 
 	return next_as_string + std::to_string(last_number);
@@ -110,15 +110,27 @@ bool ending_in(const std::string& filename, const std::vector<std::string>& endi
 	return false;
 }
 
-std::string find_match_in_dir(const std::vector<std::string>& input, const std::string& to_search)
+std::vector<std::string> find_matches_in_dir(const std::vector<std::string>& input, const std::string& to_search)
 {
 	std::regex rgx = std::regex(".*" + to_search + ".*");
+	std::vector<std::string> result;
 	for (auto i : input) {
-		if (std::regex_match(i, rgx) && !ending_in(i, settings.extensions_to_ignore))
-			return i;
+		if (std::regex_match(i, rgx))
+			result.push_back(i);
 	}
 
-	return "";
+	return result;
+}
+
+std::vector<std::string> filter_filenames_by_extension(const std::vector<std::string>& filenames, const std::vector<std::string>& extensions_to_ignore)
+{
+	std::vector<std::string> result;
+	for (auto i : filenames) {
+		if (!ending_in(i, extensions_to_ignore))
+			result.push_back(i);
+	}
+
+	return result;
 }
 
 std::string get_parent_dir(const std::string& path)

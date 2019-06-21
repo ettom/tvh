@@ -10,8 +10,7 @@
 #include "helpers.h"
 #include "config.h"
 
-extern std::string TV_HISTORY_FILE;
-extern const size_t HISTORY_SIZE;
+
 std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>&);
 std::string find_last_played(const std::string&);
 
@@ -20,12 +19,12 @@ std::string find_last_played(const std::string&);
 class Show
 {
 	public:
-		Show();                                                // Default constructor
-		Show(std::string next_ep_path);                        // Constructor for passing a filename
-		Show(std::string season_folder_path, int line_number); // Constructor for passing the season dir and a menu position
+		Show();                                                                   // Default constructor
+		Show(Settings settings, std::string next_ep_path);                        // Constructor for passing a filename
+		Show(Settings settings, std::string season_dir_path, int line_number); // Constructor for passing the season dir and a menu position
 		std::string get_series_name();
 		std::string get_season_number();
-		std::string get_season_folder_path();
+		std::string get_season_dir_path();
 		std::string get_last_played_file();
 		std::string get_last_played_path();
 		std::string get_next_ep_path();
@@ -38,14 +37,21 @@ class Show
 
 	private:
 		std::string find_next_season_path();
+		Settings settings;
 
 		int line_number;
+		std::string find_first_ep_in_next_season_dir();
+		std::string find_next_ep_in_this_season_dir(const std::string& next_ep_number);
+		std::vector<std::string> extensions_to_ignore;
+		std::string tv_history_file;
 		std::string next_ep_path;
 		std::string next_ep_name;
-		std::string season_folder_path;
+		std::string season_dir_path;
 		std::string season_number;
 		std::string series_name;
 		std::string last_played_ep;
 		std::string next_ep_parent_dir;
+		std::regex ep_regex = std::regex("E([0-9]+)");
+		std::regex season_regex = std::regex("S([0-9]+)");
 
 };

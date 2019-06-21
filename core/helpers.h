@@ -9,8 +9,6 @@
 #include "config.h"
 #include "show.h"
 
-extern Settings settings;
-
 int write_file(const std::string& filename, const std::vector<std::string>& to_write);
 std::vector<std::string> readfile(const std::string& filename);
 std::vector<std::string> lsdir(const std::string& dir_path);
@@ -19,11 +17,12 @@ std::vector<std::string> reverse_file_path(const std::string& input);
 std::string remove_extension(const std::string& filename);
 std::string calculate_next(int last_number);
 std::string extract_substring(const std::string& input, const std::regex& rgx);
-std::string find_match_in_dir(const std::vector<std::string>& input, const std::string& substr);
+std::vector<std::string> find_matches_in_dir(const std::vector<std::string>& input, const std::string& to_search);
+std::vector<std::string> filter_filenames_by_extension(const std::vector<std::string>& filenames, const std::vector<std::string>& extensions_to_ignore);
 std::string get_parent_dir(const std::string& path);
 std::string get_absolute_path(const std::string& path);
 bool ending_in(const std::string& filename, const std::vector<std::string>& endings);
 
 
-void play_video(const std::string& path_to_file);
+void play_video(std::string video_player, const std::string& path_to_file);
 int run_ext_cmd(const std::string& cmd);

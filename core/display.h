@@ -14,17 +14,17 @@
 #include "helpers.h"
 #include "config.h"
 
-extern Settings settings;
-
 class Display
 {
 	public:
-		Display(const std::map<int, Show> showmap);
+		Display(Settings settings, const std::map<int, Show> showmap, size_t list_length);
 		void startup();
 		void cleanup();
 		void draw_window();
 		char clear_and_print(const std::string& toprint);
 	private:
+		Settings settings;
+		size_t list_length;
 		void display_last_played_ep_name(int current_pos);
 		void display_next_ep_name(int current_pos);
 		void print_menu(int to_highlight);

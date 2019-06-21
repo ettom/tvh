@@ -1,8 +1,6 @@
 #include "helpers.h"
 #include <gtest/gtest.h>
 
-Settings settings;
-
 
 TEST(Helpers, givenFileName_callingRemoveExtension_mustReturnFileNameWithOutExtension){
 	// ARRANGE
@@ -67,10 +65,10 @@ TEST(Helpers, givenDigit_callingCalculateNext_mustReturnDigitPlusOneWithALeading
 	ASSERT_EQ(result3, "10");
 }
 
-TEST(Helpers, givenFilenameAndAListOfExtensions_callingEndingIn_mustReturnTrueIfFilenameEndsInOneOfTheGivenFileNames){
+TEST(Helpers, givenFilenameAndAListOfExtensions_callingEndingIn_mustReturnTrueIfFilenameEndsInOneOfTheGivenExtensions){
 	// ARRANGE
 	std::string filename = "file.txt";
-	std::vector<std::string> extensions = {"cpp", "sh", "txt"};
+	std::vector<std::string> extensions {"cpp", "sh", "txt"};
 
 	// ACT
 	bool extension_of_filename_in_extensions = ending_in(filename, extensions);
@@ -79,7 +77,7 @@ TEST(Helpers, givenFilenameAndAListOfExtensions_callingEndingIn_mustReturnTrueIf
 	ASSERT_TRUE(extension_of_filename_in_extensions);
 }
 
-TEST(Helpers, givenAStringAndARegex_callingExtractSubstring_mustReturnMatchingSubstring){
+TEST(Helpers, givenAStringAndRegex_callingExtractSubstring_mustReturnMatchingSubstring){
 	// ARRANGE
 	std::string input = "some_test_string";
 	std::regex rgx = std::regex("_(.*)_");
