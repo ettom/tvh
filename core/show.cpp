@@ -58,6 +58,11 @@ std::string Show::get_series_name()
 	return this->series_name;
 }
 
+std::string Show::get_next_ep_parent_dir()
+{
+	return this->next_ep_parent_dir;
+}
+
 std::string Show::get_season_number()
 {
 	return this->season_number;

@@ -29,7 +29,9 @@ std::vector<std::string> Display::format_lines()
 void Display::display_last_played_ep_name(int current_pos)
 {
 	std::string last_played = remove_extension(showmap.at(current_pos).get_last_played_file()); // Get the name of the last played episode without extension
-	clear_and_print(last_played);
+	char ch = clear_and_print(last_played);
+	if (ch == 'f')
+		open_dir_in_file_manager(settings.FILE_MANAGER, showmap.at(current_pos).get_season_dir_path());
 }
 
 
@@ -38,7 +40,10 @@ void Display::display_next_ep_name(int current_pos)
 	std::string next_up = remove_extension(showmap.at(current_pos).get_next_ep_name());         // Get the name of the next episode without extension
 	if (next_up == "")
 		next_up = "Next episode not found!";
-	clear_and_print(next_up);
+
+	char ch = clear_and_print(next_up);
+	if (ch == 'f')
+		open_dir_in_file_manager(settings.FILE_MANAGER, showmap.at(current_pos).get_next_ep_parent_dir());
 }
 
 void Display::print_menu(int to_highlight)
@@ -60,13 +65,15 @@ char Display::clear_and_print(const std::string& toprint)
 	char item[NAME_MAX];
 	wclear(w);
 	box(w, 0, 0);
-	char ch;
+	char ch ;
 
 	do {
+		ch = 0;
 		sprintf(item, "%-7s", toprint.c_str());
 		mvwprintw(w, 3, 5, "%s", item);
+		ch = wgetch(w);
 
-	} while ((ch = !wgetch(w)));
+	} while (!ch);
 
 	std::cout << ch << std::endl;
 
@@ -78,16 +85,16 @@ char Display::clear_and_print(const std::string& toprint)
 
 void Display::startup()
 {
-	initscr();                                               // initialize Ncurses
+	initscr();               // initialize Ncurses
 	w = newwin(7, 50, 0, 0); // create a new window
-	box(w, 0, 0);                                            // sets default borders for the window
+	box(w, 0, 0);            // sets default borders for the window
 
-	print_menu(0);                                           // print the menu
-	wrefresh(w);                                           // update the terminal screen
+	print_menu(0);           // print the menu
+	wrefresh(w);             // update the terminal screen
 
-	noecho();                                                // disable echoing of characters on the screen
-	keypad(w, TRUE);                                         // enable keyboard input for the window.
-	curs_set(0);                                             // hide the default screen cursor.
+	noecho();                // disable echoing of characters on the screen
+	keypad(w, TRUE);         // enable keyboard input for the window.
+	curs_set(0);             // hide the default screen cursor.
 }
 
 void Display::cleanup()
