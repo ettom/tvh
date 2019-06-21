@@ -27,3 +27,7 @@ bool ends_in(const std::string& filename, const std::vector<std::string>& ending
 void play_video(const std::string& video_player, const std::string& path_to_file);
 void open_dir_in_file_manager(const std::string& file_manager, const std::string& dir_path);
 int run_ext_cmd(const std::string& cmd);
+
+std::vector<std::string> delete_match_from_vector(std::vector<std::string> input, std::regex to_match);
+std::vector<std::string> insert_element_to_first_pos(std::vector<std::string> input, std::string element);
+std::vector<std::string> resize_vector_to_size(std::vector<std::string> input, int target_size);

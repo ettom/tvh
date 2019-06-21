@@ -101,3 +101,40 @@ TEST(Helpers, givenReversedPathAsVector_callingExtractSeriesNameSeason_mustRetur
 	ASSERT_EQ(std::get<1>(result), "S01");
 }
 
+TEST(Helpers, givenVectorAndTargetSize_callingResizeVectorToSize_mustReturnVectorWithMaxSizeOfTarget){
+	// ARRANGE
+	int target_size = 3;
+	std::vector<std::string> input_vector {"a", "b", "c", "d"};
+	std::vector<std::string> expected_result {"a", "b", "c"};
+
+	// ACT
+	std::vector<std::string> result = resize_vector_to_size(input_vector, target_size);
+
+	//ASSERT
+	ASSERT_EQ(result, expected_result);
+}
+
+TEST(Helpers, givenVectorAndRegex_callingDeleteMatchFromRegex_mustReturnVectorWithMatchinElementsRemoved){
+	// ARRANGE
+	std::regex rgx("a");
+	std::vector<std::string> input_vector {"a", "b", "c", "d"};
+	std::vector<std::string> expected_result {"b", "c", "d"};
+
+	// ACT
+	std::vector<std::string> result = delete_match_from_vector(input_vector, rgx);
+
+	//ASSERT
+	ASSERT_EQ(result, expected_result);
+}
+TEST(Helpers, givenVectorAndElement_callingInsertElementToFirstPos_mustReturnVectorWithElementOnFirstPositon){
+	// ARRANGE
+	std::string element = "8";
+	std::vector<std::string> input_vector {"1", "2", "3", "4"};
+	std::vector<std::string> expected_result {"8", "1", "2", "3", "4"};
+
+	// ACT
+	std::vector<std::string> result = insert_element_to_first_pos(input_vector, element);
+
+	//ASSERT
+	ASSERT_EQ(result, expected_result);
+}

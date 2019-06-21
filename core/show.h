@@ -7,6 +7,7 @@
 #include <iostream>
 #include <regex>
 
+#include "show_logic.h"
 #include "helpers.h"
 #include "config.h"
 
@@ -19,9 +20,13 @@ std::string find_last_played(const std::string&);
 class Show
 {
 	public:
-		Show();                                                                // Default constructor
-		Show(Settings settings, std::string next_ep_path);                     // Constructor for passing a filename
-		Show(Settings settings, std::string season_dir_path, int line_number); // Constructor for passing the season dir and a menu position
+		// Default constructor
+		Show();
+		// Constructor for passing the season dir and a menu position - launched normally
+		Show(Settings settings, std::string season_dir_path, int line_number);
+		// Constructor for passing a filename - launched as a wrapper to video player
+		Show(Settings settings, std::string next_ep_path, std::string next_ep_parent_dir);
+
 		std::string get_series_name();
 		std::string get_season_number();
 		std::string get_season_dir_path();

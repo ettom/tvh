@@ -189,3 +189,29 @@ std::tuple<std::string, std::string> extract_series_name_season(const std::vecto
 	return std::make_tuple(series_name, season);
 }
 
+std::vector<std::string> resize_vector_to_size(std::vector<std::string> input, int target_size)
+{
+	if (input.size() > target_size)
+		input.resize(target_size);
+	return input;
+
+}
+
+std::vector<std::string> delete_match_from_vector(std::vector<std::string> input, std::regex rgx)
+{
+
+	std::string to_delete = "";
+	for (std::string line : input) {
+		if (std::regex_match(line, rgx))
+			to_delete = line;
+	}
+	input.erase(std::remove(input.begin(), input.end(), to_delete), input.end());
+	return input;
+
+}
+
+std::vector<std::string> insert_element_to_first_pos(std::vector<std::string> input, std::string element)
+{
+	input.insert(input.begin(), element);
+	return input;
+}
