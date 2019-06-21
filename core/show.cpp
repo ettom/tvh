@@ -150,6 +150,7 @@ void Show::set_next_ep_path()
 
 std::string Show::get_next_ep_name()
 {
+	// Can be tested, separate method for...
 	if (this->next_ep_path == "")
 		this->set_next_ep_path();
 	std::vector<std::string> reversed_path = reverse_file_path(this->next_ep_path);
@@ -162,12 +163,15 @@ std::string Show::get_next_ep_name()
 
 void Show::add_to_tracker_file()
 {
+	// Can't be tested
 	const std::vector<std::string>& to_write = {next_ep_path};
 	write_file(this->next_ep_parent_dir + "/.tracker", to_write);
 }
 
 void Show::add_to_history_file()
 {
+	// This can be tested, create separate method for generating history contents
+	// Inputs would be current history file contents and next episode parent dir
 	std::vector<std::string> history_contents = readfile(this->tv_history_file); // Read the current file contents
 
 	std::regex rgx = std::regex(".*" + series_name + ".*");
