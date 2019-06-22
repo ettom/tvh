@@ -89,16 +89,15 @@ std::tuple<std::string, std::string> extract_series_name_season(const std::vecto
 
 	std::regex r("S[0-9]{2}.*");              // If string starts with Sxx, it's the season dir
 
-	int season_seen = 0;
+	bool season_seen = false;
 	for (auto line : lines) {
-
 		if (season_seen) {                // If we have seen the season number, assume the next dir is the name of the show
 			series_name = line;
 			break;
 		}
 		if (std::regex_match (line, r)) { // Check if line is a season dir
 			season = line;
-			season_seen = 1;
+			season_seen = true;
 		} else {
 			series_name = line;       // If it's not, assume it's the name of the show
 			season = "S01";           // Therefore the show only has one season, set season number to S01
@@ -114,12 +113,10 @@ std::vector<std::string> resize_vector_to_size(std::vector<std::string>& input, 
 	if (input.size() > target_size)
 		input.resize(target_size);
 	return input;
-
 }
 
 std::vector<std::string> delete_match_from_vector(std::vector<std::string>& input, const std::regex& rgx)
 {
-
 	std::string to_delete = "";
 	for (std::string line : input) {
 		if (std::regex_match(line, rgx))
@@ -127,7 +124,6 @@ std::vector<std::string> delete_match_from_vector(std::vector<std::string>& inpu
 	}
 	input.erase(std::remove(input.begin(), input.end(), to_delete), input.end());
 	return input;
-
 }
 
 std::vector<std::string> insert_element_to_first_pos(std::vector<std::string>& input, const std::string& element)

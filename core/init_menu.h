@@ -13,7 +13,7 @@ std::map<int, Show> create_shows(Settings settings)
 	int current_line_number = 0;
 	for (std::string line : lines) {
 		Show show(settings, line, current_line_number); // Create show object
-		all_shows[current_line_number] = show;                           // Assign to map where key is the current line number and object is the value
+		all_shows[current_line_number] = show;          // Assign to map where key is the current line number and object is the value
 		current_line_number++;
 	}
 

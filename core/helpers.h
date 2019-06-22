@@ -6,7 +6,6 @@
 #include "config.h"
 #include "show.h"
 #include "filesystem.h"
-#include "extcmd.h"
 
 std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>& lines);
 std::vector<std::string> reverse_file_path(const std::string& input);
