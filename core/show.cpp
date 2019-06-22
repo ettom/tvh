@@ -91,38 +91,30 @@ std::string Show::get_next_ep_path()
 std::string Show::find_next_season_path()
 {
 	// Can probably be tested, not sure if necessary
-	std::string result = "";
 	int last_season_number = std::stoi(extract_substring(last_played_ep, this->settings.season_regex));
 	std::string next_season_number = "S" + calculate_next(last_season_number);
 
 	const std::string& parent_dir = get_parent_dir(this->season_dir_path);
 	const std::vector<std::string>& dir_contents = lsdir(parent_dir);
 	const std::vector<std::string>& dirs_matching_next_season_number = find_matches_in_vector(dir_contents, next_season_number);
-	if (!dirs_matching_next_season_number.empty())
-		result = dirs_matching_next_season_number.at(0);
 
-	return result;
+	return get_first_element_otherwise_empty(dirs_matching_next_season_number);
 }
 
 std::string Show::find_first_ep_in_next_season_dir()
 {
 	// Can be tested, pass directory contents and extensions to ignore as arguments
-	std::string result;
 	std::string next_season_path = find_next_season_path();
 	std::vector<std::string> dir_contents = lsdir(next_season_path);
 	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, "E01");
 	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->extensions_to_ignore);
-	if (!filtered_dir_contents.empty()) {
-		result = filtered_dir_contents.at(0);
-	}
-	return result;
+	return get_first_element_otherwise_empty(filtered_dir_contents);
 
 }
 
 std::string Show::find_next_ep_in_this_season_dir(const std::string& next_ep_number)
 {
 	// Can be tested, pass directory contents and extensions to ignore as arguments
-	std::string result;
 	std::vector<std::string> dir_contents = lsdir(this->season_dir_path);
 	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, next_ep_number);
 	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->extensions_to_ignore);
@@ -154,10 +146,8 @@ std::string Show::get_next_ep_name()
 	if (this->next_ep_path == "")
 		this->set_next_ep_path();
 	std::vector<std::string> reversed_path = reverse_file_path(this->next_ep_path);
-	if (reversed_path.empty())
-		reversed_path.push_back("");
 
-	this->next_ep_name = reversed_path.at(0);
+	this->next_ep_name = get_first_element_otherwise_empty(reversed_path);
 	return this->next_ep_name;
 }
 
