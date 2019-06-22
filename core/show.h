@@ -53,7 +53,4 @@ class Show
 		std::string series_name;
 		std::string last_played_ep;
 		std::string next_ep_parent_dir;
-		std::regex ep_regex = std::regex("E([0-9]+)");
-		std::regex season_regex = std::regex("S([0-9]+)");
-
 };

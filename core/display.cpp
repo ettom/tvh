@@ -51,7 +51,7 @@ void Display::print_menu(int to_highlight)
 	int i = 0;
 	char item[NAME_MAX]; // Max filename length, probably 255
 
-	for(i = 0; i < this->list_length; i++) {
+	for(i = 0; i < this->list_length; ++i) {
 		(i == to_highlight) ? wattron(w, A_STANDOUT) : wattroff(w, A_STANDOUT);
 		sprintf(item, "%-7s",  this->list.at(static_cast<size_t>(i)).c_str());
 		mvwprintw(w, i + 1, 2, "%s", item);

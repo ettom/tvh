@@ -92,7 +92,7 @@ std::string Show::find_next_season_path()
 {
 	// Can probably be tested, not sure if necessary
 	std::string result = "";
-	int last_season_number = std::stoi(extract_substring(last_played_ep, this->season_regex));
+	int last_season_number = std::stoi(extract_substring(last_played_ep, this->settings.season_regex));
 	std::string next_season_number = "S" + calculate_next(last_season_number);
 
 	const std::string& parent_dir = get_parent_dir(this->season_dir_path);
@@ -113,7 +113,7 @@ std::string Show::find_first_ep_in_next_season_dir()
 	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, "E01");
 	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->extensions_to_ignore);
 	if (!filtered_dir_contents.empty()) {
-		result =filtered_dir_contents.at(0);
+		result = filtered_dir_contents.at(0);
 	}
 	return result;
 
@@ -126,20 +126,15 @@ std::string Show::find_next_ep_in_this_season_dir(const std::string& next_ep_num
 	std::vector<std::string> dir_contents = lsdir(this->season_dir_path);
 	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, next_ep_number);
 	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->extensions_to_ignore);
-	if (!filtered_dir_contents.empty()) {
-		result = filtered_dir_contents.at(0);
-	}
-	return result;
-
+	return get_first_element_otherwise_empty(filtered_dir_contents);
 }
 
 void Show::set_next_ep_path()
 {
-	// Can't be tested
 	if (this->next_ep_path != "")
 		return;
 	std::string next_ep_path = "";
-	int last_ep_number = std::stoi(extract_substring(this->last_played_ep, this->ep_regex));
+	int last_ep_number = std::stoi(extract_substring(this->last_played_ep, this->settings.ep_regex));
 	std::string next_ep_number = "E" + calculate_next(last_ep_number);
 
 	next_ep_path = find_next_ep_in_this_season_dir(next_ep_number);

@@ -19,3 +19,4 @@ bool ends_in(const std::string& filename, const std::vector<std::string>& ending
 std::vector<std::string> delete_match_from_vector(std::vector<std::string>& input, const std::regex& to_match);
 std::vector<std::string> insert_element_to_first_pos(std::vector<std::string>& input, const std::string& element);
 std::vector<std::string> resize_vector_to_size(std::vector<std::string>& input, int target_size);
+std::string get_first_element_otherwise_empty(const std::vector<std::string>& input);

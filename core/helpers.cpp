@@ -26,7 +26,7 @@ std::vector<std::string> reverse_file_path(const std::string& input)
 std::string calculate_next(int last_number)
 {
 	std::string next_as_string = "";
-	last_number++;
+	++last_number;
 	if (last_number < 10)
 		next_as_string += "0";
 
@@ -133,8 +133,9 @@ std::vector<std::string> insert_element_to_first_pos(std::vector<std::string>& i
 }
 
 
-std::vector<std::string> get_first_element_(std::vector<std::string>& input, const std::string& element)
+std::string get_first_element_otherwise_empty(const std::vector<std::string>& input)
 {
-	input.insert(input.begin(), element);
-	return input;
+	if (!input.empty())
+		return input.at(0);
+	return "";
 }

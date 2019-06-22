@@ -4,9 +4,9 @@ int write_file(const std::string& filename, const std::vector<std::string>& to_w
 {
 	std::ofstream ofs(filename);
 
-	if(! ofs) {
+	if (! ofs.is_open())
 		throw std::runtime_error("Error opening file for output");
-	}
+
 	for (auto line : to_write) {
 		ofs << line << std::endl;
 	}
