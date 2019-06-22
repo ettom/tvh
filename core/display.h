@@ -13,6 +13,7 @@
 #include "show.h"
 #include "helpers.h"
 #include "config.h"
+#include "extcmd.h"
 
 class Display
 {

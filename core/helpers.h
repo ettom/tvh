@@ -1,18 +1,12 @@
 #pragma once
 #include <string>
-#include <sstream>
-#include <fstream>
 #include <vector>
 #include <regex>
 
 #include "config.h"
 #include "show.h"
 #include "filesystem.h"
-
-void open_dir_in_file_manager(const std::string& file_manager, const std::string& dir_path);
-void play_video(const std::string& video_player, const std::string& path_to_file);
-int run_ext_cmd(const std::string& cmd);
-
+#include "extcmd.h"
 
 std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>& lines);
 std::vector<std::string> reverse_file_path(const std::string& input);

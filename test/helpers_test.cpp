@@ -26,27 +26,6 @@ TEST(Helpers, givenFilePath_callingReverseFilePath_mustReturnReversedFilePath){
 	ASSERT_EQ(result, expected_result);
 }
 
-TEST(Helpers, givenFaultySystemCommand_callingRunExtCmd_mustNotReturn0){
-	// ARRANGE
-	std::string command = "some_invalid_command";
-
-	// ACT
-	int result = run_ext_cmd(command);
-
-	// ASSERT
-	ASSERT_NE(result, 0);
-}
-
-TEST(Helpers, givenCorrectSystemCommand_callingRunExtCmd_mustReturn0){
-	// ARRANGE
-	std::string command = "date";
-
-	// ACT
-	int result = run_ext_cmd(command);
-
-	// ASSERT
-	ASSERT_EQ(result, 0);
-}
 
 TEST(Helpers, givenDigit_callingCalculateNext_mustReturnDigitPlusOneWithALeadingZeroUnlessDigitWas9){
 	// ARRANGE

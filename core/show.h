@@ -7,7 +7,6 @@
 #include <iostream>
 #include <regex>
 
-#include "show_logic.h"
 #include "helpers.h"
 #include "config.h"
 #include "filesystem.h"
