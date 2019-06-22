@@ -9,7 +9,7 @@ TEST(Helpers, givenFileName_callingRemoveExtension_mustReturnFileNameWithOutExte
 	// ACT
 	std::string result = remove_extension(filename);
 
-	//ASSERT
+	// ASSERT
 	ASSERT_EQ(result, "file");
 }
 
@@ -21,7 +21,7 @@ TEST(Helpers, givenFilePath_callingReverseFilePath_mustReturnReversedFilePath){
 	// ACT
 	std::vector<std::string> result = reverse_file_path(file_path);
 
-	//ASSERT
+	// ASSERT
 	std::vector<std::string> expected_result = {"file.txt", "mypath", "home"};
 	ASSERT_EQ(result, expected_result);
 }
@@ -33,7 +33,7 @@ TEST(Helpers, givenFaultySystemCommand_callingRunExtCmd_mustNotReturn0){
 	// ACT
 	int result = run_ext_cmd(command);
 
-	//ASSERT
+	// ASSERT
 	ASSERT_NE(result, 0);
 }
 
@@ -44,7 +44,7 @@ TEST(Helpers, givenCorrectSystemCommand_callingRunExtCmd_mustReturn0){
 	// ACT
 	int result = run_ext_cmd(command);
 
-	//ASSERT
+	// ASSERT
 	ASSERT_EQ(result, 0);
 }
 
@@ -59,13 +59,13 @@ TEST(Helpers, givenDigit_callingCalculateNext_mustReturnDigitPlusOneWithALeading
 	std::string result2 = calculate_next(number2);
 	std::string result3 = calculate_next(number3);
 
-	//ASSERT
+	// ASSERT
 	ASSERT_EQ(result1, "01");
 	ASSERT_EQ(result2, "02");
 	ASSERT_EQ(result3, "10");
 }
 
-TEST(Helpers, givenFilenameAndAListOfExtensions_callingEndsIn_mustReturnTrueIfFilenameEndsInOneOfTheGivenExtensions){
+TEST(Helpers, givenFilenameAndAVectorOfExtensions_callingEndsIn_mustReturnTrueIfFilenameEndsInOneOfTheGivenExtensions){
 	// ARRANGE
 	std::string filename = "file.txt";
 	std::vector<std::string> extensions {"cpp", "sh", "txt"};
@@ -73,7 +73,7 @@ TEST(Helpers, givenFilenameAndAListOfExtensions_callingEndsIn_mustReturnTrueIfFi
 	// ACT
 	bool extension_of_filename_in_extensions = ends_in(filename, extensions);
 
-	//ASSERT
+	// ASSERT
 	ASSERT_TRUE(extension_of_filename_in_extensions);
 }
 
@@ -85,7 +85,7 @@ TEST(Helpers, givenAStringAndRegex_callingExtractSubstring_mustReturnMatchingSub
 	// ACT
 	std::string result = extract_substring(input, rgx);
 
-	//ASSERT
+	// ASSERT
 	ASSERT_EQ(result, "test");
 }
 
@@ -96,7 +96,7 @@ TEST(Helpers, givenReversedPathAsVector_callingExtractSeriesNameSeason_mustRetur
 	// ACT
 	std::tuple<std::string, std::string> result = extract_series_name_season(input);
 
-	//ASSERT
+	// ASSERT
 	ASSERT_EQ(std::get<0>(result), "myshow");
 	ASSERT_EQ(std::get<1>(result), "S01");
 }
@@ -110,7 +110,7 @@ TEST(Helpers, givenVectorAndTargetSize_callingResizeVectorToSize_mustReturnVecto
 	// ACT
 	std::vector<std::string> result = resize_vector_to_size(input_vector, target_size);
 
-	//ASSERT
+	// ASSERT
 	ASSERT_EQ(result, expected_result);
 }
 
@@ -123,7 +123,7 @@ TEST(Helpers, givenVectorAndRegex_callingDeleteMatchFromRegex_mustReturnVectorWi
 	// ACT
 	std::vector<std::string> result = delete_match_from_vector(input_vector, rgx);
 
-	//ASSERT
+	// ASSERT
 	ASSERT_EQ(result, expected_result);
 }
 TEST(Helpers, givenVectorAndElement_callingInsertElementToFirstPos_mustReturnVectorWithElementOnFirstPositon){
@@ -135,6 +135,32 @@ TEST(Helpers, givenVectorAndElement_callingInsertElementToFirstPos_mustReturnVec
 	// ACT
 	std::vector<std::string> result = insert_element_to_first_pos(input_vector, element);
 
-	//ASSERT
+	// ASSERT
+	ASSERT_EQ(result, expected_result);
+}
+
+TEST(Helpers, givenVectorAndString_callingFindMatchesInVector_mustReturnAllMatchingElements){
+	// ARRANGE
+	std::vector<std::string> input_vector {"abc", "aabc", "def", "ghi"};
+	std::string to_search = "a";
+	std::vector<std::string> expected_result {"abc", "aabc"};
+
+	// ACT
+	std::vector<std::string> result = find_matches_in_vector(input_vector, to_search);
+
+	// ASSERT
+	ASSERT_EQ(result, expected_result);
+}
+
+TEST(Helpers, givenVectorOfFilenamesAndVectorOfExtensionsToIgnore_callingFilterFilenamesByExtension_mustReturnVectorOfFilenamesWithMatchingElementsRemoved){
+	// ARRANGE
+	std::vector<std::string> filenames {"myfile.txt", "myfile.sh", "myfile.cpp", "myfile.h"};
+	std::vector<std::string> extensions_to_ignore {"txt", "sh"};
+	std::vector<std::string> expected_result {"myfile.cpp", "myfile.h"};
+
+	// ACT
+	std::vector<std::string> result = filter_filenames_by_extension(filenames, extensions_to_ignore);
+
+	// ASSERT
 	ASSERT_EQ(result, expected_result);
 }

@@ -7,31 +7,6 @@ std::string remove_extension(const std::string& filename) {
 	return filename.substr(0, lastdot);
 }
 
-std::vector<std::string> readfile(const std::string& filename)
-{
-	std::ifstream infile(filename);
-	std::string line;
-	std::vector<std::string> lines;
-	while (std::getline(infile, line)) {
-		lines.push_back(line);
-	}
-	infile.close();
-	return lines;
-}
-
-int write_file(const std::string& filename, const std::vector<std::string>& to_write)
-{
-	std::ofstream ofs(filename);
-
-	if(! ofs) {
-		throw std::runtime_error("Error opening file for output");
-	}
-	for (auto line : to_write) {
-		ofs << line << std::endl;
-	}
-	ofs.close();
-	return 0;
-}
 
 std::vector<std::string> reverse_file_path(const std::string& input)
 {
@@ -65,19 +40,6 @@ void open_dir_in_file_manager(const std::string& file_manager, const std::string
 	run_ext_cmd(cmd);
 }
 
-std::vector<std::string> lsdir(const std::string& dir_path)
-{
-	std::vector<std::string> dir_contents;
-
-	try {
-		for (const auto & entry : std::filesystem::directory_iterator(dir_path))
-			dir_contents.push_back(entry.path());
-	} catch (std::filesystem::filesystem_error&) {
-	}
-
-	return dir_contents;
-}
-
 std::string calculate_next(int last_number)
 {
 	std::string next_as_string = "";
@@ -99,7 +61,6 @@ std::string extract_substring(const std::string& input, const std::regex& rgx)
 	throw std::exception();
 }
 
-// Check if filename ends in one of the given filenames
 bool ends_in(const std::string& filename, const std::vector<std::string>& endings)
 {
 	bool ends_in;
@@ -114,7 +75,7 @@ bool ends_in(const std::string& filename, const std::vector<std::string>& ending
 	return false;
 }
 
-std::vector<std::string> find_matches_in_dir(const std::vector<std::string>& input, const std::string& to_search)
+std::vector<std::string> find_matches_in_vector(const std::vector<std::string>& input, const std::string& to_search)
 {
 	std::regex rgx = std::regex(".*" + to_search + ".*");
 	std::vector<std::string> result;
@@ -137,30 +98,6 @@ std::vector<std::string> filter_filenames_by_extension(const std::vector<std::st
 	return result;
 }
 
-std::string get_parent_dir(const std::string& path)
-{
-	std::string parent_dir = "";
-	try {
-		parent_dir = static_cast<std::filesystem::path>(path).parent_path();
-	}
-	catch (std::filesystem::filesystem_error&) {
-	}
-	return parent_dir;
-}
-
-std::string get_absolute_path(const std::string& path)
-{
-	// Get absolute path and validate it
-	// Throw exception if invalid path
-	auto p = static_cast<std::filesystem::path>(path);
-	std::ifstream test(p);
-	if (!test)
-	{
-		throw std::runtime_error(p);
-	}
-	test.close();
-	return std::filesystem::absolute(p);
-}
 
 std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>& lines)
 {
@@ -189,7 +126,7 @@ std::tuple<std::string, std::string> extract_series_name_season(const std::vecto
 	return std::make_tuple(series_name, season);
 }
 
-std::vector<std::string> resize_vector_to_size(std::vector<std::string> input, int target_size)
+std::vector<std::string> resize_vector_to_size(std::vector<std::string>& input, int target_size)
 {
 	if (input.size() > target_size)
 		input.resize(target_size);
@@ -197,7 +134,7 @@ std::vector<std::string> resize_vector_to_size(std::vector<std::string> input, i
 
 }
 
-std::vector<std::string> delete_match_from_vector(std::vector<std::string> input, std::regex rgx)
+std::vector<std::string> delete_match_from_vector(std::vector<std::string>& input, const std::regex& rgx)
 {
 
 	std::string to_delete = "";
@@ -210,7 +147,14 @@ std::vector<std::string> delete_match_from_vector(std::vector<std::string> input
 
 }
 
-std::vector<std::string> insert_element_to_first_pos(std::vector<std::string> input, std::string element)
+std::vector<std::string> insert_element_to_first_pos(std::vector<std::string>& input, const std::string& element)
+{
+	input.insert(input.begin(), element);
+	return input;
+}
+
+
+std::vector<std::string> get_first_element_(std::vector<std::string>& input, const std::string& element)
 {
 	input.insert(input.begin(), element);
 	return input;

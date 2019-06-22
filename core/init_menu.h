@@ -2,6 +2,7 @@
 
 #include "show.h"
 #include "display.h"
+#include "filesystem.h"
 
 std::map<int, Show> create_shows(Settings settings)
 {

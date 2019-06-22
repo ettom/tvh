@@ -10,12 +10,10 @@
 #include "show_logic.h"
 #include "helpers.h"
 #include "config.h"
+#include "filesystem.h"
 
 
-std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>&);
 std::string find_last_played(const std::string&);
-
-
 
 class Show
 {

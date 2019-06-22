@@ -97,7 +97,7 @@ std::string Show::find_next_season_path()
 
 	const std::string& parent_dir = get_parent_dir(this->season_dir_path);
 	const std::vector<std::string>& dir_contents = lsdir(parent_dir);
-	const std::vector<std::string>& dirs_matching_next_season_number = find_matches_in_dir(dir_contents, next_season_number);
+	const std::vector<std::string>& dirs_matching_next_season_number = find_matches_in_vector(dir_contents, next_season_number);
 	if (!dirs_matching_next_season_number.empty())
 		result = dirs_matching_next_season_number.at(0);
 
@@ -110,7 +110,7 @@ std::string Show::find_first_ep_in_next_season_dir()
 	std::string result;
 	std::string next_season_path = find_next_season_path();
 	std::vector<std::string> dir_contents = lsdir(next_season_path);
-	std::vector<std::string> matches_in_dir = find_matches_in_dir(dir_contents, "E01");
+	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, "E01");
 	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->extensions_to_ignore);
 	if (!filtered_dir_contents.empty()) {
 		result =filtered_dir_contents.at(0);
@@ -124,7 +124,7 @@ std::string Show::find_next_ep_in_this_season_dir(const std::string& next_ep_num
 	// Can be tested, pass directory contents and extensions to ignore as arguments
 	std::string result;
 	std::vector<std::string> dir_contents = lsdir(this->season_dir_path);
-	std::vector<std::string> matches_in_dir = find_matches_in_dir(dir_contents, next_ep_number);
+	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, next_ep_number);
 	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->extensions_to_ignore);
 	if (!filtered_dir_contents.empty()) {
 		result = filtered_dir_contents.at(0);
@@ -168,7 +168,6 @@ std::string Show::get_next_ep_name()
 
 void Show::add_to_tracker_file()
 {
-	// Can't be tested
 	const std::vector<std::string>& to_write = {next_ep_path};
 	write_file(this->next_ep_parent_dir + "/.tracker", to_write);
 }

@@ -10,7 +10,7 @@
 #include "helpers.h"
 #include "display.h"
 #include "init_menu.h"
-
+#include "filesystem.h"
 
 
 int main(int argc, char *argv[])
@@ -32,11 +32,11 @@ int main(int argc, char *argv[])
 		play_video(settings.VIDEO_PLAYER, path_to_file);
 
 		std::regex rgx(".*E([0-9]+).*");
-		if (std::regex_match(path_to_file, rgx)) { // If path is an ep file
+		if (std::regex_match(path_to_file, rgx)) {                             // If path is an ep file
 			std::string next_ep_parent_dir = get_parent_dir(path_to_file);
-			Show show(settings, path_to_file, next_ep_parent_dir); // Create show object
-			show.add_to_tracker_file();        // Write filename to .tracker file in same dir
-			show.add_to_history_file();        // Write the dir of the file to the global history file
+			Show show(settings, path_to_file, next_ep_parent_dir);         // Create show object
+			show.add_to_tracker_file();                                    // Write filename to .tracker file in same dir
+			show.add_to_history_file();                                    // Write the dir of the file to the global history file
 		}
 	} else {
 		launch_menu(settings);
