@@ -147,4 +147,24 @@ TEST(Helpers, givenVectorAndElement_callingInsertElementToFirstPos_mustReturnVec
 	ASSERT_EQ(result, expected_result);
 }
 
+TEST(Helpers, givenEmptyVector_callingGetFirstElementOtherwiseEmpty_mustReturnEmptyString){
+	// ARRANGE
+	std::vector<std::string> input_vector {};
 
+	// ACT
+	std::string result = get_first_element_otherwise_empty(input_vector);
+
+	// ASSERT
+	ASSERT_EQ(result, "");
+}
+
+TEST(Helpers, givenVectorWithMultipleElements_callingGetFirstElementOtherwiseEmpty_mustReturnFirstElement){
+	// ARRANGE
+	std::vector<std::string> input_vector {"1", "2", "3", "4"};
+
+	// ACT
+	std::string result = get_first_element_otherwise_empty(input_vector);
+
+	// ASSERT
+	ASSERT_EQ(result, "1");
+}

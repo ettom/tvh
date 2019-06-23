@@ -109,7 +109,6 @@ std::string Show::find_first_ep_in_next_season_dir()
 	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, "E01");
 	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->extensions_to_ignore);
 	return get_first_element_otherwise_empty(filtered_dir_contents);
-
 }
 
 std::string Show::find_next_ep_in_this_season_dir(const std::string& next_ep_number)
