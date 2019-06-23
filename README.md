@@ -5,8 +5,14 @@ Keep track of your tv shows.
 creating a .`tracker` file containing the last watched episode in every tv show
 directory. It also keeps a log of the last watched shows.
 
-## Building
+## Configuration
+Edit the core/config.h file and build the program.
 
+You must change the `VIDEO_PLAYER` field to match your video player.
+Additionally you can change the other fields to match your setup and needs. These are
+pretty self-explanatory.
+
+## Building
 Dependencies:
 
 ```
@@ -15,7 +21,7 @@ g++-8
 ncurses
 ```
 
-Building:
+Installation:
 
 ```
 git clone REPO
@@ -26,15 +32,7 @@ cmake --build .
 cp app/tvh ~/.local/bin/tvh
 ```
 
-## Configuration
-Edit the core/config.h file and build the program.
-
-You must change the `VIDEO_PLAYER` field to match your video player.
-Additionally you can change the other fields to match your setup and needs. These are
-pretty self-explanatory.
-
 ## Usage
-
 `tvh` is meant to be used as a wrapper for your video player.
 
 Point your default video player to tvh or use it from the command line as follows:
@@ -51,7 +49,6 @@ l/right arrow. Other keybindings are:
 `f` - opens the directory of the episode in a file manager <br/>
 
 ## Naming scheme
-
 By default, `tvh` expects your tv shows directories to be structured and named as
 follows: `series_name/season_number/episode_file`. For one-season shows the episode files
 can be placed directly to the `series_name` folder, a season folder is not required.
