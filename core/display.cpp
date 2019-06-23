@@ -139,7 +139,7 @@ void Display::draw_window()
 				play_video(settings.VIDEO_PLAYER, next_ep_path);
 			}
 			goto exit_loop;
-		case 'i': case 'p':
+		case 'p':
 			display_last_played_ep_name(i);                     // Display the name of the last played episode
 			print_menu(i);                                      // Display the menu again
 			continue;

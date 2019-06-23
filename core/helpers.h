@@ -7,13 +7,13 @@
 #include "show.h"
 #include "filesystem.h"
 
-std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>& lines);
+std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>& lines, const std::regex& SEASON_REGEX);
 std::vector<std::string> reverse_file_path(const std::string& input);
 std::string remove_extension(const std::string& filename);
 std::string calculate_next(int last_number);
 std::string extract_substring(const std::string& input, const std::regex& rgx);
 std::vector<std::string> find_matches_in_vector(const std::vector<std::string>& input, const std::string& to_search);
-std::vector<std::string> filter_filenames_by_extension(const std::vector<std::string>& filenames, const std::vector<std::string>& extensions_to_ignore);
+std::vector<std::string> filter_filenames_by_extension(const std::vector<std::string>& filenames, const std::vector<std::string>& EXTENSIONS_TO_IGNORE);
 bool ends_in(const std::string& filename, const std::vector<std::string>& endings);
 
 std::vector<std::string> delete_match_from_vector(std::vector<std::string>& input, const std::regex& to_match);

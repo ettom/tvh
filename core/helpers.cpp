@@ -35,11 +35,12 @@ std::string calculate_next(int last_number)
 std::string extract_substring(const std::string& input, const std::regex& rgx)
 {
 	std::smatch match;
+	std::string result = "";
 
 	if (std::regex_search(input.begin(), input.end(), match, rgx))
 		return match[1];
 
-	throw std::exception();
+	return result;
 }
 
 bool ends_in(const std::string& filename, const std::vector<std::string>& endings)
@@ -56,12 +57,10 @@ bool ends_in(const std::string& filename, const std::vector<std::string>& ending
 	return false;
 }
 
-std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>& lines)
+std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>& lines, const std::regex& SEASON_REGEX)
 {
 	std::string series_name;
 	std::string season;
-
-	std::regex r("S[0-9]{2}.*");              // If string starts with Sxx, it's the season dir
 
 	bool season_seen = false;
 	for (auto line : lines) {
@@ -69,7 +68,7 @@ std::tuple<std::string, std::string> extract_series_name_season(const std::vecto
 			series_name = line;
 			break;
 		}
-		if (std::regex_match (line, r)) { // Check if line is a season dir
+		if (! extract_substring(line, SEASON_REGEX).empty()) { // Check if line is a season dir
 			season = line;
 			season_seen = true;
 		} else {
@@ -94,11 +93,11 @@ std::vector<std::string> find_matches_in_vector(const std::vector<std::string>& 
 	return result;
 }
 
-std::vector<std::string> filter_filenames_by_extension(const std::vector<std::string>& filenames, const std::vector<std::string>& extensions_to_ignore)
+std::vector<std::string> filter_filenames_by_extension(const std::vector<std::string>& filenames, const std::vector<std::string>& EXTENSIONS_TO_IGNORE)
 {
 	std::vector<std::string> result;
 	for (auto i : filenames) {
-		if (!ends_in(i, extensions_to_ignore))
+		if (!ends_in(i, EXTENSIONS_TO_IGNORE))
 			result.push_back(i);
 	}
 

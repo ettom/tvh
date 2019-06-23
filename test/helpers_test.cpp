@@ -72,9 +72,10 @@ TEST(Helpers, givenFilenameAndAVectorOfExtensions_callingEndsIn_mustReturnTrueIf
 TEST(Helpers, givenReversedPathAsVector_callingExtractSeriesNameSeason_mustReturnTupleOfSeriesNameAndSeasonNumber){
 	// ARRANGE
 	std::vector<std::string> input {"S01", "myshow", "shows"};
+	Settings settings;
 
 	// ACT
-	std::tuple<std::string, std::string> result = extract_series_name_season(input);
+	std::tuple<std::string, std::string> result = extract_series_name_season(input, settings.SEASON_REGEX);
 
 	// ASSERT
 	ASSERT_EQ(std::get<0>(result), "myshow");
@@ -98,11 +99,11 @@ TEST(Helpers, givenVectorAndString_callingFindMatchesInVector_mustReturnAllMatch
 TEST(Helpers, givenVectorOfFilenamesAndVectorOfExtensionsToIgnore_callingFilterFilenamesByExtension_mustReturnVectorOfFilenamesWithMatchingElementsRemoved){
 	// ARRANGE
 	std::vector<std::string> filenames {"myfile.txt", "myfile.sh", "myfile.cpp", "myfile.h"};
-	std::vector<std::string> extensions_to_ignore {"txt", "sh"};
+	std::vector<std::string> EXTENSIONS_TO_IGNORE {"txt", "sh"};
 	std::vector<std::string> expected_result {"myfile.cpp", "myfile.h"};
 
 	// ACT
-	std::vector<std::string> result = filter_filenames_by_extension(filenames, extensions_to_ignore);
+	std::vector<std::string> result = filter_filenames_by_extension(filenames, EXTENSIONS_TO_IGNORE);
 
 	// ASSERT
 	ASSERT_EQ(result, expected_result);

@@ -15,10 +15,12 @@
 
 int main(int argc, char *argv[])
 {
-	std::string env_HOME = std::getenv("HOME");
-	std::string tv_history_file = env_HOME + "/.local/share/tvhistory";
 	Settings settings;
-	settings.tv_history_file = tv_history_file;
+
+	std::string env_HOME = std::getenv("HOME");
+	std::string TV_HISTORY_FILE = env_HOME + settings.TV_HISTORY_FILE;
+
+	settings.TV_HISTORY_FILE = TV_HISTORY_FILE;
 
 	if (argc > 1) { // If a filename is passed
 		std::string path_to_file;

@@ -9,7 +9,7 @@ std::map<int, Show> create_shows(Settings settings)
 	// Create show objects for every dir name in the history file
 	std::map<int, Show> all_shows;
 
-	std::vector<std::string> lines = readfile(settings.tv_history_file);
+	std::vector<std::string> lines = readfile(settings.TV_HISTORY_FILE);
 	int current_line_number = 0;
 	for (std::string line : lines) {
 		Show show(settings, line, current_line_number); // Create show object

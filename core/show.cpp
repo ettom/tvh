@@ -22,11 +22,11 @@ Show::Show(Settings s, std::string p, int n)
 	this->season_dir_path = p;
 	this->line_number = n;
 
-	this->tv_history_file = settings.tv_history_file;
-	this->extensions_to_ignore = settings.extensions_to_ignore;
+	this->TV_HISTORY_FILE = settings.TV_HISTORY_FILE;
+	this->EXTENSIONS_TO_IGNORE = settings.EXTENSIONS_TO_IGNORE;
 
 	const std::vector<std::string>& lines = reverse_file_path(season_dir_path);
-	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines);
+	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines, settings.SEASON_REGEX);
 	series_name = std::get<0>(name_season);
 	season_number = std::get<1>(name_season);
 
@@ -40,13 +40,13 @@ Show::Show(Settings s, std::string p, std::string n)
 	this->settings = s;
 	this->next_ep_path = p;
 
-	this->tv_history_file = settings.tv_history_file;
-	this->extensions_to_ignore = settings.extensions_to_ignore;
+	this->TV_HISTORY_FILE = settings.TV_HISTORY_FILE;
+	this->EXTENSIONS_TO_IGNORE = settings.EXTENSIONS_TO_IGNORE;
 
 	this->next_ep_parent_dir = n;
 
 	const std::vector<std::string>& lines = reverse_file_path(this->next_ep_parent_dir);
-	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines);
+	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines, settings.SEASON_REGEX);
 
 	series_name = std::get<0>(name_season);
 	season_number = std::get<1>(name_season);
@@ -91,7 +91,7 @@ std::string Show::get_next_ep_path()
 std::string Show::find_next_season_path()
 {
 	// Can probably be tested, not sure if necessary
-	int last_season_number = std::stoi(extract_substring(last_played_ep, this->settings.season_regex));
+	int last_season_number = std::stoi(extract_substring(last_played_ep, this->settings.SEASON_REGEX));
 	std::string next_season_number = "S" + calculate_next(last_season_number);
 
 	const std::string& parent_dir = get_parent_dir(this->season_dir_path);
@@ -107,7 +107,7 @@ std::string Show::find_first_ep_in_next_season_dir()
 	std::string next_season_path = find_next_season_path();
 	std::vector<std::string> dir_contents = lsdir(next_season_path);
 	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, "E01");
-	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->extensions_to_ignore);
+	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->EXTENSIONS_TO_IGNORE);
 	return get_first_element_otherwise_empty(filtered_dir_contents);
 }
 
@@ -116,7 +116,7 @@ std::string Show::find_next_ep_in_this_season_dir(const std::string& next_ep_num
 	// Can be tested, pass directory contents and extensions to ignore as arguments
 	std::vector<std::string> dir_contents = lsdir(this->season_dir_path);
 	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, next_ep_number);
-	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->extensions_to_ignore);
+	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->EXTENSIONS_TO_IGNORE);
 	return get_first_element_otherwise_empty(filtered_dir_contents);
 }
 
@@ -125,7 +125,7 @@ void Show::set_next_ep_path()
 	if (this->next_ep_path != "")
 		return;
 	std::string next_ep_path = "";
-	int last_ep_number = std::stoi(extract_substring(this->last_played_ep, this->settings.ep_regex));
+	int last_ep_number = std::stoi(extract_substring(this->last_played_ep, this->settings.EP_REGEX));
 	std::string next_ep_number = "E" + calculate_next(last_ep_number);
 
 	next_ep_path = find_next_ep_in_this_season_dir(next_ep_number);
@@ -158,11 +158,11 @@ void Show::add_to_tracker_file()
 
 void Show::add_to_history_file()
 {
-	std::vector<std::string> history_contents = readfile(this->tv_history_file); // Read the current file contents
+	std::vector<std::string> history_contents = readfile(this->TV_HISTORY_FILE); // Read the current file contents
 
 	std::regex rgx = std::regex(".*" + this->series_name + ".*");
 	history_contents = delete_match_from_vector(history_contents, rgx);
 	history_contents = insert_element_to_first_pos(history_contents, this->next_ep_parent_dir);
 	history_contents = resize_vector_to_size(history_contents, settings.HISTORY_SIZE);
-	write_file(this->tv_history_file, history_contents);
+	write_file(this->TV_HISTORY_FILE, history_contents);
 }
