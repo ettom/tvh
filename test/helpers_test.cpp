@@ -44,18 +44,6 @@ TEST(Helpers, givenDigit_callingCalculateNext_mustReturnDigitPlusOneWithALeading
 	ASSERT_EQ(result3, "10");
 }
 
-TEST(Helpers, givenFilenameAndAVectorOfExtensions_callingEndsIn_mustReturnTrueIfFilenameEndsInOneOfTheGivenExtensions){
-	// ARRANGE
-	std::string filename = "file.txt";
-	std::vector<std::string> extensions {"cpp", "sh", "txt"};
-
-	// ACT
-	bool extension_of_filename_in_extensions = ends_in(filename, extensions);
-
-	// ASSERT
-	ASSERT_TRUE(extension_of_filename_in_extensions);
-}
-
 TEST(Helpers, givenAStringAndRegex_callingExtractSubstring_mustReturnMatchingSubstring){
 	// ARRANGE
 	std::string input = "some_test_string";
@@ -68,6 +56,19 @@ TEST(Helpers, givenAStringAndRegex_callingExtractSubstring_mustReturnMatchingSub
 	ASSERT_EQ(result, "test");
 }
 
+TEST(Helpers, givenFilenameAndAVectorOfExtensions_callingEndsIn_mustReturnTrueIfFilenameEndsInOneOfTheGivenExtensions){
+	// ARRANGE
+	std::string filename = "file.txt";
+	std::vector<std::string> extensions {"cpp", "sh", "txt"};
+
+	// ACT
+	bool extension_of_filename_in_extensions = ends_in(filename, extensions);
+
+	// ASSERT
+	ASSERT_TRUE(extension_of_filename_in_extensions);
+}
+
+
 TEST(Helpers, givenReversedPathAsVector_callingExtractSeriesNameSeason_mustReturnTupleOfSeriesNameAndSeasonNumber){
 	// ARRANGE
 	std::vector<std::string> input {"S01", "myshow", "shows"};
@@ -78,6 +79,33 @@ TEST(Helpers, givenReversedPathAsVector_callingExtractSeriesNameSeason_mustRetur
 	// ASSERT
 	ASSERT_EQ(std::get<0>(result), "myshow");
 	ASSERT_EQ(std::get<1>(result), "S01");
+}
+
+
+TEST(Helpers, givenVectorAndString_callingFindMatchesInVector_mustReturnAllMatchingElements){
+	// ARRANGE
+	std::vector<std::string> input_vector {"abc", "aabc", "def", "ghi"};
+	std::string to_search = "a";
+	std::vector<std::string> expected_result {"abc", "aabc"};
+
+	// ACT
+	std::vector<std::string> result = find_matches_in_vector(input_vector, to_search);
+
+	// ASSERT
+	ASSERT_EQ(result, expected_result);
+}
+
+TEST(Helpers, givenVectorOfFilenamesAndVectorOfExtensionsToIgnore_callingFilterFilenamesByExtension_mustReturnVectorOfFilenamesWithMatchingElementsRemoved){
+	// ARRANGE
+	std::vector<std::string> filenames {"myfile.txt", "myfile.sh", "myfile.cpp", "myfile.h"};
+	std::vector<std::string> extensions_to_ignore {"txt", "sh"};
+	std::vector<std::string> expected_result {"myfile.cpp", "myfile.h"};
+
+	// ACT
+	std::vector<std::string> result = filter_filenames_by_extension(filenames, extensions_to_ignore);
+
+	// ASSERT
+	ASSERT_EQ(result, expected_result);
 }
 
 TEST(Helpers, givenVectorAndTargetSize_callingResizeVectorToSize_mustReturnVectorWithMaxSizeOfTarget){
@@ -105,6 +133,7 @@ TEST(Helpers, givenVectorAndRegex_callingDeleteMatchFromRegex_mustReturnVectorWi
 	// ASSERT
 	ASSERT_EQ(result, expected_result);
 }
+
 TEST(Helpers, givenVectorAndElement_callingInsertElementToFirstPos_mustReturnVectorWithElementOnFirstPositon){
 	// ARRANGE
 	std::string element = "8";
@@ -118,28 +147,4 @@ TEST(Helpers, givenVectorAndElement_callingInsertElementToFirstPos_mustReturnVec
 	ASSERT_EQ(result, expected_result);
 }
 
-TEST(Helpers, givenVectorAndString_callingFindMatchesInVector_mustReturnAllMatchingElements){
-	// ARRANGE
-	std::vector<std::string> input_vector {"abc", "aabc", "def", "ghi"};
-	std::string to_search = "a";
-	std::vector<std::string> expected_result {"abc", "aabc"};
 
-	// ACT
-	std::vector<std::string> result = find_matches_in_vector(input_vector, to_search);
-
-	// ASSERT
-	ASSERT_EQ(result, expected_result);
-}
-
-TEST(Helpers, givenVectorOfFilenamesAndVectorOfExtensionsToIgnore_callingFilterFilenamesByExtension_mustReturnVectorOfFilenamesWithMatchingElementsRemoved){
-	// ARRANGE
-	std::vector<std::string> filenames {"myfile.txt", "myfile.sh", "myfile.cpp", "myfile.h"};
-	std::vector<std::string> extensions_to_ignore {"txt", "sh"};
-	std::vector<std::string> expected_result {"myfile.cpp", "myfile.h"};
-
-	// ACT
-	std::vector<std::string> result = filter_filenames_by_extension(filenames, extensions_to_ignore);
-
-	// ASSERT
-	ASSERT_EQ(result, expected_result);
-}

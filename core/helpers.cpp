@@ -7,7 +7,6 @@ std::string remove_extension(const std::string& filename) {
 	return filename.substr(0, lastdot);
 }
 
-
 std::vector<std::string> reverse_file_path(const std::string& input)
 {
 	std::istringstream string_stream(input);
@@ -21,7 +20,6 @@ std::vector<std::string> reverse_file_path(const std::string& input)
 	std::reverse(lines.begin(),lines.end());
 	return lines;
 }
-
 
 std::string calculate_next(int last_number)
 {
@@ -58,30 +56,6 @@ bool ends_in(const std::string& filename, const std::vector<std::string>& ending
 	return false;
 }
 
-std::vector<std::string> find_matches_in_vector(const std::vector<std::string>& input, const std::string& to_search)
-{
-	std::regex rgx = std::regex(".*" + to_search + ".*");
-	std::vector<std::string> result;
-	for (auto i : input) {
-		if (std::regex_match(i, rgx))
-			result.push_back(i);
-	}
-
-	return result;
-}
-
-std::vector<std::string> filter_filenames_by_extension(const std::vector<std::string>& filenames, const std::vector<std::string>& extensions_to_ignore)
-{
-	std::vector<std::string> result;
-	for (auto i : filenames) {
-		if (!ends_in(i, extensions_to_ignore))
-			result.push_back(i);
-	}
-
-	return result;
-}
-
-
 std::tuple<std::string, std::string> extract_series_name_season(const std::vector<std::string>& lines)
 {
 	std::string series_name;
@@ -106,6 +80,29 @@ std::tuple<std::string, std::string> extract_series_name_season(const std::vecto
 	}
 
 	return std::make_tuple(series_name, season);
+}
+
+std::vector<std::string> find_matches_in_vector(const std::vector<std::string>& input, const std::string& to_search)
+{
+	std::regex rgx = std::regex(".*" + to_search + ".*");
+	std::vector<std::string> result;
+	for (auto i : input) {
+		if (std::regex_match(i, rgx))
+			result.push_back(i);
+	}
+
+	return result;
+}
+
+std::vector<std::string> filter_filenames_by_extension(const std::vector<std::string>& filenames, const std::vector<std::string>& extensions_to_ignore)
+{
+	std::vector<std::string> result;
+	for (auto i : filenames) {
+		if (!ends_in(i, extensions_to_ignore))
+			result.push_back(i);
+	}
+
+	return result;
 }
 
 std::vector<std::string> resize_vector_to_size(std::vector<std::string>& input, int target_size)
