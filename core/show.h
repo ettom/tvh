@@ -37,18 +37,22 @@ class Show
 
 		void set_season_dir(std::string dir);
 		void set_next_ep_path();
+
 		void add_to_tracker_file();
 		void add_to_history_file();
 
 	private:
-		std::string find_next_season_dir();
 		Settings settings;
-
 		int line_number;
+
+		std::string find_next_season_dir();
 		std::string find_first_ep_in_next_season_dir();
 		std::string find_next_ep_in_this_season_dir(const std::string& next_ep_number);
+		void set_series_name_season(std::string path);
+
 		std::vector<std::string> EXTENSIONS_TO_IGNORE;
 		std::string TV_HISTORY_FILE;
+
 		std::string next_ep_path;
 		std::string next_ep_name;
 		std::string last_season_dir;

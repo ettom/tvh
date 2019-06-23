@@ -6,10 +6,7 @@ std::string find_last_played(const std::string& last_season_dir)
 	// Return the contents of the .tracker file in the given season dir path
 	std::string trackerfile = last_season_dir + "/.tracker";
 	std::vector<std::string> lines = readfile(trackerfile);
-
-	if (lines.empty())
-		lines.push_back("");
-	return lines.at(0);
+	return get_first_element_otherwise_empty(lines);
 }
 
 Show::Show()
@@ -25,14 +22,7 @@ Show::Show(Settings s, std::string p, int n)
 	this->TV_HISTORY_FILE = settings.TV_HISTORY_FILE;
 	this->EXTENSIONS_TO_IGNORE = settings.EXTENSIONS_TO_IGNORE;
 
-	const std::vector<std::string>& lines = reverse_file_path(last_season_dir);
-	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines, settings.SEASON_REGEX);
-	series_name = std::get<0>(name_season);
-	season_number = std::get<1>(name_season);
-
-	last_played_ep = find_last_played(last_season_dir);
-	next_ep_path = "";
-
+	set_series_name_season(last_season_dir);
 }
 
 Show::Show(Settings s, std::string p, std::string n)
@@ -45,11 +35,7 @@ Show::Show(Settings s, std::string p, std::string n)
 
 	this->next_season_dir = n;
 
-	const std::vector<std::string>& lines = reverse_file_path(this->next_season_dir);
-	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines, settings.SEASON_REGEX);
-
-	series_name = std::get<0>(name_season);
-	season_number = std::get<1>(name_season);
+	set_series_name_season(this->next_season_dir);
 }
 
 Show::Show(Settings s, std::string p)
@@ -60,11 +46,17 @@ Show::Show(Settings s, std::string p)
 	this->TV_HISTORY_FILE = settings.TV_HISTORY_FILE;
 	this->EXTENSIONS_TO_IGNORE = settings.EXTENSIONS_TO_IGNORE;
 
-	const std::vector<std::string>& lines = reverse_file_path(get_parent_dir(last_played_ep));
-	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines, settings.SEASON_REGEX);
+	set_series_name_season(get_parent_dir(last_played_ep));
 
-	series_name = std::get<0>(name_season);
-	season_number = std::get<1>(name_season);
+}
+
+void Show::set_series_name_season(std::string path)
+{
+	const std::vector<std::string>& lines = reverse_file_path(path);
+	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines, settings.SEASON_REGEX);
+	this->series_name = std::get<0>(name_season);
+	this->season_number = std::get<1>(name_season);
+
 }
 
 void Show::set_season_dir(std::string dir)
