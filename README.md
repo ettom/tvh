@@ -5,6 +5,27 @@ Keep track of your tv shows.
 creating a .`tracker` file containing the last watched episode in every tv show
 directory. It also keeps a log of the last watched shows.
 
+## Usage
+`tvh` is meant to be used as a wrapper for your video player.
+
+Set `tvh` as your default video player or use it from the command line as follows:
+```
+tvh myvideo.mkv
+```
+Now, when you want to watch the next episode of that tv show, you no longer have to
+navigate to the directory containing the files and try to remember which episode you
+last watched.
+
+When tvh is launched without arguments: <br/>
+If there is a `.tracker` file in the current directory, the next episode of the
+corresponding show is launched. Otherwise, a menu containing the latest tv shows you
+watched pops up. Use vim/arrow keys to navigate, launch the next episode by pressing
+`l` / right arrow. Other keybindings are:
+
+• `p` - displays the name of the previously watched episode <br/>
+• `n` - displays the name of the next episode <br/>
+• `f` - opens the directory of the episode in a file manager <br/>
+
 ## Configuration
 Edit the core/config.h file and build the program.
 
@@ -32,33 +53,13 @@ cmake --build .
 cp app/tvh ~/.local/bin/tvh
 ```
 
-## Usage
-`tvh` is meant to be used as a wrapper for your video player.
-
-Point your default video player to tvh or use it from the command line as follows:
-```
-tvh myvideo.mkv
-```
-
-When tvh is launched without arguments: <br/>
-If there is a `.tracker` file in the current directory, launch the next episode of
-the corresponding show. Otherwise, a menu containing the latest tv shows you watched
-pops up. Use vim/arrow keys to navigate, launch the next episode by pressing
-l/right arrow. Other keybindings are:
-
-`p` - displays the name of the previously watched episode <br/>
-`n` - displays the name of the next episode <br/>
-`f` - opens the directory of the episode in a file manager <br/>
-
 ## Naming scheme
-By default, `tvh` expects your tv shows directories to be structured and named as
-follows: `series_name/season_number/episode_file`. For one-season shows the episode files
-can be placed directly to the `series_name` folder, a season folder is not required.
+By default, `tvh` expects your tv show directories to be structured as follows:
+`series_name/season_number/episode_file`. A season directory is not necessarily
+required, all the episodes can just be placed into the `series_name` directory.
 
-Season folders and episodes should follow a naming scheme: <br/>
-Season folder names have to *start* with `S{season number:00}` <br/>
-eg. `S01`, `S10` <br/>
-Episode filenames have to *contain* `E{episode number:00}` <br/>
-eg. `S01E01`, `E01`, `S10E10`, `E10` <br/>
+Season directories and episodes should follow a naming scheme: <br/>
+• Season directory names have to *start* with `S{season number:00}` eg. `S01`, `S10` <br/>
+• Episode filenames have to *contain* `E{episode number:00}` eg. `S01E01`, `E01`, `S10E10`, `E10` <br/>
 
 This is currently not configurable, but hopefully will be in the future.
