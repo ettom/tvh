@@ -39,8 +39,8 @@ std::string extract_substring(const std::string& input, const std::regex& rgx)
 
 	if (std::regex_search(input.begin(), input.end(), match, rgx))
 		return match[1];
-
 	return result;
+
 }
 
 bool ends_in(const std::string& filename, const std::vector<std::string>& endings)

@@ -40,8 +40,10 @@ Point your default video player to tvh or use it from the command line as follow
 tvh myvideo.mkv
 ```
 
-When tvh is launched without arguments, a menu containing the latest tv shows you
-watched pops up. Use vim/arrow keys to navigate, launch the next episode by pressing
+When tvh is launched without arguments: <br/>
+If there is a `.tracker` file in the current directory, launch the next episode of
+the corresponding show. Otherwise, a menu containing the latest tv shows you watched
+pops up. Use vim/arrow keys to navigate, launch the next episode by pressing
 l/right arrow. Other keybindings are:
 
 `p` - displays the name of the previously watched episode <br/>

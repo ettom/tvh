@@ -31,7 +31,7 @@ void Display::display_last_played_ep_name(int current_pos)
 	std::string last_played = remove_extension(showmap.at(current_pos).get_last_played_file()); // Get the name of the last played episode without extension
 	char ch = clear_and_print(last_played);
 	if (ch == 'f')
-		open_dir_in_file_manager(settings.FILE_MANAGER, showmap.at(current_pos).get_season_dir_path());
+		open_dir_in_file_manager(settings.FILE_MANAGER, showmap.at(current_pos).get_last_season_dir());
 }
 
 
@@ -43,7 +43,7 @@ void Display::display_next_ep_name(int current_pos)
 
 	char ch = clear_and_print(next_up);
 	if (ch == 'f')
-		open_dir_in_file_manager(settings.FILE_MANAGER, showmap.at(current_pos).get_next_ep_parent_dir());
+		open_dir_in_file_manager(settings.FILE_MANAGER, showmap.at(current_pos).get_next_season_dir());
 }
 
 void Display::print_menu(int to_highlight)
@@ -151,7 +151,7 @@ void Display::draw_window()
 			continue;
 			break;
 		case 'f':
-			std::string dir = showmap.at(i).get_season_dir_path();
+			std::string dir = showmap.at(i).get_last_season_dir();
 			open_dir_in_file_manager(settings.FILE_MANAGER, dir);;
 			print_menu(i);
 			continue;

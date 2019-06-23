@@ -19,20 +19,24 @@ class Show
 	public:
 		// Default constructor
 		Show();
-		// Constructor for passing the season dir and a menu position - launched normally
-		Show(Settings settings, std::string season_dir_path, int line_number);
-		// Constructor for passing a filename - launched as a wrapper to video player
-		Show(Settings settings, std::string next_ep_path, std::string next_ep_parent_dir);
+		// Constructor for passing the season dir and a menu position - launched without arguments
+		Show(Settings settings, std::string last_season_dir, int line_number);
+		// Constructor for passing a filename(next episode) - launched as a wrapper to video player
+		Show(Settings settings, std::string next_ep_path, std::string next_season_dir);
+		// Constructor for passing a filename(last episode) - launched without arguments in a show dir
+		Show(Settings settings, std::string last_ep_path);
 
 		std::string get_series_name();
 		std::string get_season_number();
-		std::string get_season_dir_path();
+		std::string get_last_season_dir();
 		std::string get_last_played_file();
 		std::string get_last_played_path();
 		std::string get_next_ep_path();
 		std::string get_next_ep_name();
-		std::string get_next_ep_parent_dir();
+		std::string get_next_season_dir();
 
+		void set_season_dir(std::string dir_name);
+		void set_next_season_dir(std::string path_to_file);
 		void set_next_ep_path();
 		void add_to_tracker_file();
 		void add_to_history_file();
@@ -48,9 +52,9 @@ class Show
 		std::string TV_HISTORY_FILE;
 		std::string next_ep_path;
 		std::string next_ep_name;
-		std::string season_dir_path;
+		std::string last_season_dir;
 		std::string season_number;
 		std::string series_name;
 		std::string last_played_ep;
-		std::string next_ep_parent_dir;
+		std::string next_season_dir;
 };
