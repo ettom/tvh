@@ -35,14 +35,13 @@ class Show
 		std::string get_next_ep_name();
 		std::string get_next_season_dir();
 
-		void set_season_dir(std::string dir_name);
-		void set_next_season_dir(std::string path_to_file);
+		void set_season_dir(std::string dir);
 		void set_next_ep_path();
 		void add_to_tracker_file();
 		void add_to_history_file();
 
 	private:
-		std::string find_next_season_path();
+		std::string find_next_season_dir();
 		Settings settings;
 
 		int line_number;

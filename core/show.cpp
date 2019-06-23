@@ -60,21 +60,16 @@ Show::Show(Settings s, std::string p)
 	this->TV_HISTORY_FILE = settings.TV_HISTORY_FILE;
 	this->EXTENSIONS_TO_IGNORE = settings.EXTENSIONS_TO_IGNORE;
 
-	const std::vector<std::string>& lines = reverse_file_path(this->next_season_dir);
+	const std::vector<std::string>& lines = reverse_file_path(get_parent_dir(last_played_ep));
 	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines, settings.SEASON_REGEX);
 
 	series_name = std::get<0>(name_season);
 	season_number = std::get<1>(name_season);
 }
 
-void Show::set_next_season_dir(std::string path_to_file)
+void Show::set_season_dir(std::string dir)
 {
-	this->next_season_dir = get_parent_dir(path_to_file);
-}
-
-void Show::set_season_dir(std::string dir_name)
-{
-	this->last_season_dir = dir_name;
+	this->last_season_dir = dir;
 }
 
 
@@ -113,7 +108,7 @@ std::string Show::get_next_ep_path()
 	return this->next_ep_path;
 }
 
-std::string Show::find_next_season_path()
+std::string Show::find_next_season_dir()
 {
 	// Can probably be tested, not sure if necessary
 	int last_season_number = std::stoi(extract_substring(last_played_ep, this->settings.SEASON_REGEX));
@@ -129,8 +124,8 @@ std::string Show::find_next_season_path()
 std::string Show::find_first_ep_in_next_season_dir()
 {
 	// Can be tested, pass directory contents and extensions to ignore as arguments
-	std::string next_season_path = find_next_season_path();
-	std::vector<std::string> dir_contents = lsdir(next_season_path);
+	std::string next_season_dir = find_next_season_dir();
+	std::vector<std::string> dir_contents = lsdir(this->next_season_dir);
 	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, "E01");
 	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->EXTENSIONS_TO_IGNORE);
 	return get_first_element_otherwise_empty(filtered_dir_contents);
