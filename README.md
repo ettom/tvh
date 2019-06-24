@@ -1,9 +1,9 @@
 # tvh
 Keep track of your tv shows.
 
-`tvh` is a simple ncurses program to keep track of your tv show episodes. It works by
-creating a .`tracker` file containing the last watched episode in every tv show
-directory. It also keeps a log of the last watched shows.
+`tvh` is a simple ncurses program for keeping track of your tv show episodes. It
+works by creating a .`tracker` file containing the last watched episode in every tv
+show directory. It also keeps a log of the last watched shows.
 
 ## Usage
 `tvh` is meant to be used as a wrapper for your video player.
@@ -25,6 +25,7 @@ watched pops up. Use vim/arrow keys to navigate, launch the next episode by pres
 • `p` - displays the name of the previously watched episode <br/>
 • `n` - displays the name of the next episode <br/>
 • `f` - opens the directory of the episode in a file manager <br/>
+• `d` - deletes the entry from the history
 
 ## Configuration
 Edit the core/config.h file and build the program.

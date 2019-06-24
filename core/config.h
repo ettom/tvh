@@ -9,7 +9,7 @@ struct Settings
 	size_t HISTORY_SIZE = 5;
 	std::string TV_HISTORY_FILE = "/.local/share/tvhistory"; // relative to $HOME
 	std::string VIDEO_PLAYER = "mpv";
-	std::string FILE_MANAGER = "ranger_launch";
+	std::string FILE_MANAGER = "thunar";
 	std::vector<std::string> EXTENSIONS_TO_IGNORE {"sub", "srt", "ass"};
 
 	// Don't change these

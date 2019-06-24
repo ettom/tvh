@@ -22,6 +22,7 @@ Show::Show(Settings s, std::string p, int n)
 	this->TV_HISTORY_FILE = settings.TV_HISTORY_FILE;
 	this->EXTENSIONS_TO_IGNORE = settings.EXTENSIONS_TO_IGNORE;
 
+	this->last_played_ep = find_last_played(last_season_dir);
 	set_series_name_season(last_season_dir);
 }
 
