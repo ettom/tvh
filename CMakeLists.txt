@@ -5,6 +5,10 @@ project(${ProjectId} LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
+if(BUILD_TESTS) 	# cmake .. -DBUILD_TESTS=ON
+	enable_testing()
+	add_subdirectory(test)
+endif()
+
 add_subdirectory(app)
 add_subdirectory(core)
-add_subdirectory(test)
