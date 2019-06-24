@@ -43,6 +43,12 @@ g++-8
 ncurses
 ```
 
+For Ubuntu 18.04 all dependencies can be installed with this command:<br/>
+`sudo apt install cmake g++-8 libncurses5-dev`<br/>
+It also might be necessary to set g++-8 as the default C++ compiler. On Ubuntu this
+can be done with:<br/>
+`sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 60`
+
 Installation:
 
 ```
