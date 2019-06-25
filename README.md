@@ -52,7 +52,7 @@ can be done with:<br/>
 Installation:
 
 ```
-git clone REPO
+git clone https://github.com/ettom/tvh.git
 cd tvh
 mkdir build && cd build
 cmake ..
