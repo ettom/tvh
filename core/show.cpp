@@ -117,7 +117,7 @@ std::string Show::find_next_season_dir()
 std::string Show::find_first_ep_in_next_season_dir()
 {
 	// Can be tested, pass directory contents and extensions to ignore as arguments
-	std::string next_season_dir = find_next_season_dir();
+	this->next_season_dir = find_next_season_dir();
 	std::vector<std::string> dir_contents = lsdir(this->next_season_dir);
 	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, "E01");
 	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->EXTENSIONS_TO_IGNORE);

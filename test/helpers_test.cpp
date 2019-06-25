@@ -99,11 +99,11 @@ TEST(Helpers, givenVectorAndString_callingFindMatchesInVector_mustReturnAllMatch
 TEST(Helpers, givenVectorOfFilenamesAndVectorOfExtensionsToIgnore_callingFilterFilenamesByExtension_mustReturnVectorOfFilenamesWithMatchingElementsRemoved){
 	// ARRANGE
 	std::vector<std::string> filenames {"myfile.txt", "myfile.sh", "myfile.cpp", "myfile.h"};
-	std::vector<std::string> EXTENSIONS_TO_IGNORE {"txt", "sh"};
+	std::vector<std::string> extensions_to_ignore {"txt", "sh"};
 	std::vector<std::string> expected_result {"myfile.cpp", "myfile.h"};
 
 	// ACT
-	std::vector<std::string> result = filter_filenames_by_extension(filenames, EXTENSIONS_TO_IGNORE);
+	std::vector<std::string> result = filter_filenames_by_extension(filenames, extensions_to_ignore);
 
 	// ASSERT
 	ASSERT_EQ(result, expected_result);
