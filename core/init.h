@@ -53,10 +53,8 @@ void play_next_from_dir(Settings settings, std::string working_dir)
 	std::string last_played_path = working_dir + "/" + get_first_element_otherwise_empty(readfile(working_dir + "/.tracker"));
 	Show show(settings, last_played_path);
 	show.set_season_dir(working_dir);
-	// show.set_next_season_dir();
 	show.set_next_ep_path();
 	play_video(settings.VIDEO_PLAYER, show.get_next_ep_path());
 	show.add_to_tracker_file();
 	show.add_to_history_file();
 }
-

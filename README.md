@@ -25,7 +25,7 @@ watched pops up. Use vim/arrow keys to navigate, launch the next episode by pres
 • `p` - displays the name of the previously watched episode <br/>
 • `n` - displays the name of the next episode <br/>
 • `f` - opens the directory of the episode in a file manager <br/>
-• `d` - deletes the entry from the history
+• `d` - TODO deletes the entry from the history
 
 ## Configuration
 Edit the core/config.h file and build the program.
