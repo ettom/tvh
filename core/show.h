@@ -35,7 +35,7 @@ class Show
 		std::string get_next_ep_name();
 		std::string get_next_season_dir();
 
-		void set_season_dir(std::string dir);
+		void set_season_dir(const std::string& dir);
 		void set_next_ep_path();
 
 		void add_to_tracker_file();
@@ -48,7 +48,7 @@ class Show
 		std::string find_next_season_dir();
 		std::string find_first_ep_in_next_season_dir();
 		std::string find_next_ep_in_this_season_dir(const std::string& next_ep_number);
-		void set_series_name_season(std::string path);
+		void set_series_name_season(const std::string& path);
 
 		std::vector<std::string> EXTENSIONS_TO_IGNORE;
 		std::string TV_HISTORY_FILE;

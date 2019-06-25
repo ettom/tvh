@@ -122,7 +122,7 @@ TEST(Helpers, givenVectorAndTargetSize_callingResizeVectorToSize_mustReturnVecto
 	ASSERT_EQ(result, expected_result);
 }
 
-TEST(Helpers, givenVectorAndRegex_callingDeleteMatchFromRegex_mustReturnVectorWithMatchinElementsRemoved){
+TEST(Helpers, givenVectorAndRegex_callingDeleteMatchFromRegex_mustReturnVectorWithMatchingElementsRemoved){
 	// ARRANGE
 	std::regex rgx("a");
 	std::vector<std::string> input_vector {"a", "b", "c", "d"};

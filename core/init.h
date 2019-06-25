@@ -35,7 +35,7 @@ void launch_menu(Settings settings)
 	}
 }
 
-void play_passed_filename(Settings settings, std::string path_to_file)
+void play_passed_filename(Settings settings, const std::string& path_to_file)
 {
 	play_video(settings.VIDEO_PLAYER, path_to_file);
 
@@ -48,7 +48,7 @@ void play_passed_filename(Settings settings, std::string path_to_file)
 	}
 }
 
-void play_next_from_dir(Settings settings, std::string working_dir)
+void play_next_from_dir(Settings settings, const std::string& working_dir)
 {
 	std::string last_played_path = working_dir + "/" + get_first_element_otherwise_empty(readfile(working_dir + "/.tracker"));
 	Show show(settings, last_played_path);

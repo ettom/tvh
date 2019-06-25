@@ -1,6 +1,6 @@
 #include "display.h"
 
-Display::Display(Settings s, std::map<int, Show> m, size_t n) 	// Constructor
+Display::Display(Settings s, const std::map<int, Show>& m, size_t n) 	// Constructor
 {
 	this->settings = s;
 	this->showmap = m;

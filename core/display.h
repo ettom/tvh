@@ -16,7 +16,7 @@
 class Display
 {
 	public:
-		Display(Settings settings, const std::map<int, Show> showmap, size_t list_length);
+		Display(Settings settings, const std::map<int, Show>& showmap, size_t list_length);
 		void startup();
 		void cleanup();
 		void draw_window();

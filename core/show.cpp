@@ -51,7 +51,7 @@ Show::Show(Settings s, std::string p)
 
 }
 
-void Show::set_series_name_season(std::string path)
+void Show::set_series_name_season(const std::string& path)
 {
 	const std::vector<std::string>& lines = reverse_file_path(path);
 	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines, settings.SEASON_REGEX);
@@ -60,7 +60,7 @@ void Show::set_series_name_season(std::string path)
 
 }
 
-void Show::set_season_dir(std::string dir)
+void Show::set_season_dir(const std::string& dir)
 {
 	this->last_season_dir = dir;
 }
