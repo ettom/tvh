@@ -16,7 +16,7 @@
 class Display
 {
 	public:
-		Display(const Settings& settings, const std::map<int, Show>& showmap, size_t list_length);
+		Display(const Settings& settings, const std::vector<Show>& all_shows, size_t list_length);
 		void startup();
 		void cleanup();
 		void draw_window();
@@ -30,7 +30,7 @@ class Display
 		std::vector<std::string> format_lines();
 
 		WINDOW *w;
-		std::map<int, Show> showmap;
+		std::vector<Show> all_shows;
 		std::vector<std::string> list;
 		int max_line_length = 0;
 };

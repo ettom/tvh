@@ -4,20 +4,18 @@
 #include "display.h"
 #include "filesystem.h"
 
-std::map<int, Show> create_shows(const Settings& settings)
+std::vector<Show> create_shows(const Settings& settings)
 {
 	// Create show objects for every dir name in the history file
-	std::map<int, Show> all_shows;
+	std::vector<Show> all_shows;
 	Path p;
 
 	std::vector<std::string> lines = readfile(settings.TV_HISTORY_FILE);
-	int current_line_number = 0;
 	for (std::string line : lines) {
 		p.last_season_dir = line;
 		p.last_played_ep = find_last_played(line);
 		Show show(settings, p); // Create show object
-		all_shows.insert(std::make_pair(current_line_number, show)); // Assign to map where key is the current line number and object is the value
-		current_line_number++;
+		all_shows.push_back(show);
 	}
 
 	return all_shows;
@@ -53,11 +51,11 @@ void play_next_from_dir(const Settings& settings, const std::string& working_dir
 
 void launch_menu(const Settings& settings)
 {
-	const std::map<int, Show>& showmap = create_shows(settings);
-	size_t list_length = showmap.size();
-	Display disp(settings, showmap, list_length); // Create display object
+	std::vector<Show> all_shows = create_shows(settings);
+	size_t list_length = all_shows.size();
+	Display disp(settings, all_shows, list_length); // Create display object
 
-	if (showmap.empty()) {
+	if (all_shows.empty()) {
 		disp.startup();
 		disp.clear_and_print("No shows in history!");
 		disp.cleanup();

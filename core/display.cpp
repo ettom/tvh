@@ -1,8 +1,8 @@
 #include "display.h"
 
-Display::Display(const Settings& s, const std::map<int, Show>& m, size_t n) :
+Display::Display(const Settings& s, const std::vector<Show>& l, size_t n) :
 	settings{s},
-	showmap{m},
+	all_shows{l},
 	list_length{n}
 {
 	this->list = format_lines();
@@ -10,11 +10,11 @@ Display::Display(const Settings& s, const std::map<int, Show>& m, size_t n) :
 
 std::vector<std::string> Display::format_lines()
 {
-	for(auto [key, val] : this->showmap)                                     // Iterate over show objects in map
-	{
-		std::string list_entry = val.get_series_name();
+		for (auto show : this->all_shows) {
+
+		std::string list_entry = show.get_series_name();
 		list_entry += " - ";
-		list_entry += val.get_season_number();                           // Add the series name and season number together
+		list_entry += show.get_season_number();                           // Add the series name and season number together
 
 		int current_line_length = static_cast<int>(list_entry.length());
 		if (max_line_length < current_line_length)
@@ -28,22 +28,22 @@ std::vector<std::string> Display::format_lines()
 
 void Display::display_last_played_ep_name(int current_pos)
 {
-	std::string last_played = remove_extension(showmap.at(current_pos).get_last_played_file()); // Get the name of the last played episode without extension
+	std::string last_played = remove_extension(all_shows.at(current_pos).get_last_played_file()); // Get the name of the last played episode without extension
 	char ch = clear_and_print(last_played);
 	if (ch == 'f')
-		open_dir_in_file_manager(settings.FILE_MANAGER, showmap.at(current_pos).get_last_season_dir());
+		open_dir_in_file_manager(settings.FILE_MANAGER, all_shows.at(current_pos).get_last_season_dir());
 }
 
 
 void Display::display_next_ep_name(int current_pos)
 {
-	std::string next_up = remove_extension(showmap.at(current_pos).get_next_ep_name());         // Get the name of the next episode without extension
+	std::string next_up = remove_extension(all_shows.at(current_pos).get_next_ep_name());         // Get the name of the next episode without extension
 	if (next_up == "")
 		next_up = "Next episode not found!";
 
 	char ch = clear_and_print(next_up);
 	if (ch == 'f')
-		open_dir_in_file_manager(settings.FILE_MANAGER, showmap.at(current_pos).get_next_season_dir());
+		open_dir_in_file_manager(settings.FILE_MANAGER, all_shows.at(current_pos).get_next_season_dir());
 }
 
 void Display::print_menu(int to_highlight)
@@ -127,15 +127,15 @@ void Display::draw_window()
 			i = (i > this->list_length - 1) ? 0 : i;
 			break;
 		case KEY_RIGHT: case 'l':
-			showmap.at(i).set_next_ep_path();                   // Set the next episode for the object
-			next_ep_path = showmap.at(i).get_next_ep_path();
+			all_shows.at(i).set_next_ep_path();                   // Set the next episode for the object
+			next_ep_path = all_shows.at(i).get_next_ep_path();
 			if (next_ep_path == "") {
 				clear_and_print("Next episode not found!");
 				print_menu(i);
 				continue;
 			} else {
-				showmap.at(i).add_to_tracker_file();
-				showmap.at(i).add_to_history_file();
+				all_shows.at(i).add_to_tracker_file();
+				all_shows.at(i).add_to_history_file();
 				play_video(settings.VIDEO_PLAYER, next_ep_path);
 			}
 			goto exit_loop;
@@ -151,7 +151,7 @@ void Display::draw_window()
 			continue;
 			break;
 		case 'f':
-			std::string dir = showmap.at(i).get_last_season_dir();
+			std::string dir = all_shows.at(i).get_last_season_dir();
 			open_dir_in_file_manager(settings.FILE_MANAGER, dir);;
 			print_menu(i);
 			continue;
