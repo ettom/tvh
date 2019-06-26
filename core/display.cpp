@@ -3,27 +3,27 @@
 Display::Display(const Settings& s, const std::vector<Show>& l, size_t n) :
 	settings{s},
 	all_shows{l},
-	list_length{n}
+	show_names_length{n}
 {
-	this->list = format_lines();
+	this->show_names = format_lines();
 }
 
 std::vector<std::string> Display::format_lines()
 {
-		for (auto show : this->all_shows) {
+	std::vector<std::string> result;
+	for (auto show : this->all_shows) {
+		std::string show_names_entry = show.get_series_name();
+		show_names_entry += " - ";
+		show_names_entry += show.get_season_number();                          // Add the series name and season number together
 
-		std::string list_entry = show.get_series_name();
-		list_entry += " - ";
-		list_entry += show.get_season_number();                           // Add the series name and season number together
-
-		int current_line_length = static_cast<int>(list_entry.length());
+		int current_line_length = show_names_entry.length();
 		if (max_line_length < current_line_length)
-			this->max_line_length = current_line_length;             // Store the length of the longest line
+			this->max_line_length = current_line_length;                   // Store the length of the longest line
 
-		list.push_back(list_entry);                                      // Append series name + season number to vector
+		result.push_back(show_names_entry);                                    // Append series name + season number to vector
 	}
 
-	return list;
+	return result;
 }
 
 void Display::display_last_played_ep_name(int current_pos)
@@ -37,7 +37,7 @@ void Display::display_last_played_ep_name(int current_pos)
 
 void Display::display_next_ep_name(int current_pos)
 {
-	std::string next_up = remove_extension(all_shows.at(current_pos).get_next_ep_name());         // Get the name of the next episode without extension
+	std::string next_up = remove_extension(all_shows.at(current_pos).get_next_ep_name()); // Get the name of the next episode without extension
 	if (next_up == "")
 		next_up = "Next episode not found!";
 
@@ -48,12 +48,12 @@ void Display::display_next_ep_name(int current_pos)
 
 void Display::print_menu(int to_highlight)
 {
-	int i = 0;
+	size_t i = 0;
 	char item[NAME_MAX]; // Max filename length, probably 255
 
-	for(i = 0; i < this->list_length; ++i) {
+	for(i = 0; i < this->show_names_length; ++i) {
 		(i == to_highlight) ? wattron(w, A_STANDOUT) : wattroff(w, A_STANDOUT);
-		sprintf(item, "%-7s",  this->list.at(static_cast<size_t>(i)).c_str());
+		sprintf(item, "%-7s",  this->show_names.at(i).c_str());
 		mvwprintw(w, i + 1, 2, "%s", item);
 	}
 
@@ -72,7 +72,6 @@ char Display::clear_and_print(const std::string& toprint)
 		sprintf(item, "%-7s", toprint.c_str());
 		mvwprintw(w, 3, 5, "%s", item);
 		ch = wgetch(w);
-
 	} while (!ch);
 
 	std::cout << ch << std::endl;
@@ -83,18 +82,36 @@ char Display::clear_and_print(const std::string& toprint)
 
 }
 
+void Display::delete_entry_from_menu(int current_pos)
+{
+	all_shows.erase(all_shows.begin() + current_pos);
+	this->show_names_length -= 1;
+	this->show_names = format_lines();
+	wclear(w);
+	box(w, 0, 0);
+}
+
+void Display::delete_entry_from_history(const std::string& series_name)
+{
+	std::vector<std::string> history_contents = readfile(this->settings.TV_HISTORY_FILE);
+	std::regex rgx = std::regex(".*" + series_name + ".*");
+	history_contents = delete_match_from_vector(history_contents, rgx);
+	write_file(this->settings.TV_HISTORY_FILE, history_contents);
+
+}
+
 void Display::startup()
 {
-	initscr();               // initialize Ncurses
-	w = newwin(7, 50, 0, 0); // create a new window
-	box(w, 0, 0);            // sets default borders for the window
+	initscr();               // Initialize Ncurses
+	w = newwin(7, 50, 0, 0); // Create a new window
+	box(w, 0, 0);            // Sets default borders for the window
 
-	print_menu(0);           // print the menu
-	wrefresh(w);             // update the terminal screen
+	print_menu(0);           // Print the menu
+	wrefresh(w);             // Update the terminal screen
 
-	noecho();                // disable echoing of characters on the screen
-	keypad(w, TRUE);         // enable keyboard input for the window.
-	curs_set(0);             // hide the default screen cursor.
+	noecho();                // Disable echoing of characters on the screen
+	keypad(w, TRUE);         // Enable keyboard input for the window.
+	curs_set(0);             // Hide the default screen cursor.
 }
 
 void Display::cleanup()
@@ -108,26 +125,27 @@ void Display::draw_window()
 	std::string next_ep_path;
 
 	char item[NAME_MAX];
-	int ch, i = 0;
+	int ch = 0;
+	size_t i = 0;
 	startup();
 
-	while((ch = wgetch(w))){                                                // get the input
-		sprintf(item, "%-7s", list.at(static_cast<size_t>(i)).c_str()); // right pad with spaces to make the items appear with even width.
+	while((ch = wgetch(w))){
+		sprintf(item, "%-7s", show_names.at(i).c_str()); // Right pad with spaces to make the items appear with even width.
 		mvwprintw(w, i + 1, 2, "%s", item);
-		// use a variable to increment or decrement the value based on the input.
+		// Use a variable to increment or decrement the value based on the input.
 		switch(ch) {
 		case KEY_LEFT: case 'h': case 'q':
 			goto exit_loop;
 		case KEY_UP: case 'k':
 			i--;
-			i = (i < 0) ? this->list_length - 1 : i;
+			i = (i < 0) ? this->show_names_length - 1 : i;
 			break;
 		case KEY_DOWN: case 'j':
 			i++;
-			i = (i > this->list_length - 1) ? 0 : i;
+			i = (i > this->show_names_length - 1) ? 0 : i;
 			break;
 		case KEY_RIGHT: case 'l':
-			all_shows.at(i).set_next_ep_path();                   // Set the next episode for the object
+			all_shows.at(i).set_next_ep_path();
 			next_ep_path = all_shows.at(i).get_next_ep_path();
 			if (next_ep_path == "") {
 				clear_and_print("Next episode not found!");
@@ -140,8 +158,8 @@ void Display::draw_window()
 			}
 			goto exit_loop;
 		case 'p':
-			display_last_played_ep_name(i);                     // Display the name of the last played episode
-			print_menu(i);                                      // Display the menu again
+			display_last_played_ep_name(i); // Display the name of the last played episode
+			print_menu(i);                  // Display the menu again
 			continue;
 			break;
 
@@ -151,16 +169,25 @@ void Display::draw_window()
 			continue;
 			break;
 		case 'f':
-			std::string dir = all_shows.at(i).get_last_season_dir();
-			open_dir_in_file_manager(settings.FILE_MANAGER, dir);;
+			open_dir_in_file_manager(settings.FILE_MANAGER, all_shows.at(i).get_last_season_dir());
 			print_menu(i);
 			continue;
 			break;
+		case 'd':
+			delete_entry_from_history(all_shows.at(i).get_series_name());
+			delete_entry_from_menu(i);
+			if (this->show_names_length <= 0) {
+				clear_and_print("Next episode not found!");
+				goto exit_loop;
+			}
+			i = (i - 1 < 0) ? 0 : i - 1;
+			print_menu(i);
+			break;
 		}
 
-		wattron(w, A_STANDOUT); // now highlight the next item in the list.
+		wattron(w, A_STANDOUT); // Now highlight the next item in the list
 
-		sprintf(item, "%-7s", list.at(static_cast<size_t>(i)).c_str());
+		sprintf(item, "%-7s", show_names.at(i).c_str());
 		mvwprintw(w, i + 1, 2, "%s", item);
 		wattroff(w, A_STANDOUT);
 	}
