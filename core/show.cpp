@@ -14,17 +14,16 @@ Show::Show()
 }
 
 
-Show::Show(Settings s, Path p)
+Show::Show(Settings s, Path p) :
+
+	settings{s},
+	last_season_dir{p.last_season_dir},
+	last_played_ep{p.last_played_ep},
+	next_ep_path{p.next_ep_path},
+	next_season_dir{p.next_season_dir},
+	TV_HISTORY_FILE{settings.TV_HISTORY_FILE},
+	EXTENSIONS_TO_IGNORE{settings.EXTENSIONS_TO_IGNORE}
 {
-	this->settings = s;
-	this->TV_HISTORY_FILE = settings.TV_HISTORY_FILE;
-	this->EXTENSIONS_TO_IGNORE = settings.EXTENSIONS_TO_IGNORE;
-
-	this->last_season_dir = p.last_season_dir;
-	this->last_played_ep = p.last_played_ep;
-	this->next_ep_path = p.next_ep_path;
-	this->next_season_dir = p.next_season_dir;
-
 	if (this->last_season_dir.empty()) {
 		set_series_name_season(this->next_season_dir);
 	} else {
