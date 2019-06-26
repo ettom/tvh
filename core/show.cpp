@@ -13,42 +13,23 @@ Show::Show()
 {
 }
 
-Show::Show(Settings s, std::string p, int n)
+
+Show::Show(Settings s, Path p)
 {
 	this->settings = s;
-	this->last_season_dir = p;
-	this->line_number = n;
-
 	this->TV_HISTORY_FILE = settings.TV_HISTORY_FILE;
 	this->EXTENSIONS_TO_IGNORE = settings.EXTENSIONS_TO_IGNORE;
 
-	this->last_played_ep = find_last_played(last_season_dir);
-	set_series_name_season(last_season_dir);
-}
+	this->last_season_dir = p.last_season_dir;
+	this->last_played_ep = p.last_played_ep;
+	this->next_ep_path = p.next_ep_path;
+	this->next_season_dir = p.next_season_dir;
 
-Show::Show(Settings s, std::string p, std::string n)
-{
-	this->settings = s;
-	this->next_ep_path = p;
-
-	this->TV_HISTORY_FILE = settings.TV_HISTORY_FILE;
-	this->EXTENSIONS_TO_IGNORE = settings.EXTENSIONS_TO_IGNORE;
-
-	this->next_season_dir = n;
-
-	set_series_name_season(this->next_season_dir);
-}
-
-Show::Show(Settings s, std::string p)
-{
-	this->settings = s;
-	this->last_played_ep = p;
-
-	this->TV_HISTORY_FILE = settings.TV_HISTORY_FILE;
-	this->EXTENSIONS_TO_IGNORE = settings.EXTENSIONS_TO_IGNORE;
-
-	set_series_name_season(get_parent_dir(last_played_ep));
-
+	if (this->last_season_dir.empty()) {
+		set_series_name_season(this->next_season_dir);
+	} else {
+		set_series_name_season(this->last_season_dir);
+	}
 }
 
 void Show::set_series_name_season(const std::string& path)
@@ -57,7 +38,6 @@ void Show::set_series_name_season(const std::string& path)
 	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines, settings.SEASON_REGEX);
 	this->series_name = std::get<0>(name_season);
 	this->season_number = std::get<1>(name_season);
-
 }
 
 void Show::set_season_dir(const std::string& dir)

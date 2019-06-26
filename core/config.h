@@ -16,3 +16,11 @@ struct Settings
 	std::regex EP_REGEX = std::regex("E([0-9]+)");
 	std::regex SEASON_REGEX = std::regex("S([0-9]+)");
 };
+
+struct Path
+{
+	std::string last_season_dir;
+	std::string last_played_ep;
+	std::string next_ep_path;
+	std::string next_season_dir;
+};
