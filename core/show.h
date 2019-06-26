@@ -18,7 +18,7 @@ class Show
 {
 	public:
 		Show();
-		Show(Settings s, Path p);
+		Show(const Settings& s, const Path& p);
 
 		std::string get_series_name();
 		std::string get_season_number();
@@ -37,15 +37,11 @@ class Show
 
 	private:
 		Settings settings;
-		int line_number;
 
 		std::string find_next_season_dir();
 		std::string find_first_ep_in_next_season_dir();
 		std::string find_next_ep_in_this_season_dir(const std::string& next_ep_number);
 		void set_series_name_season(const std::string& path);
-
-		std::vector<std::string> EXTENSIONS_TO_IGNORE;
-		std::string TV_HISTORY_FILE;
 
 		std::string next_ep_path;
 		std::string next_ep_name;

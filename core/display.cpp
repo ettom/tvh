@@ -1,10 +1,10 @@
 #include "display.h"
 
-Display::Display(Settings s, const std::map<int, Show>& m, size_t n) 	// Constructor
+Display::Display(const Settings& s, const std::map<int, Show>& m, size_t n) :
+	settings{s},
+	showmap{m},
+	list_length{n}
 {
-	this->settings = s;
-	this->showmap = m;
-	this->list_length = n;
 	this->list = format_lines();
 }
 
@@ -167,5 +167,4 @@ void Display::draw_window()
 
 exit_loop: ;
 	   cleanup();
-	   return;
 }
