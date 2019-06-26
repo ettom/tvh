@@ -4,7 +4,7 @@
 #include "display.h"
 #include "filesystem.h"
 
-std::map<int, Show> create_shows(Settings settings)
+std::map<int, Show> create_shows(const Settings& settings)
 {
 	// Create show objects for every dir name in the history file
 	std::map<int, Show> all_shows;
@@ -16,14 +16,14 @@ std::map<int, Show> create_shows(Settings settings)
 		p.last_season_dir = line;
 		p.last_played_ep = find_last_played(line);
 		Show show(settings, p); // Create show object
-		all_shows[current_line_number] = show;          // Assign to map where key is the current line number and object is the value
+		all_shows.insert(std::make_pair(current_line_number, show)); // Assign to map where key is the current line number and object is the value
 		current_line_number++;
 	}
 
 	return all_shows;
 }
 
-void play_passed_filename(Settings settings, const std::string& path_to_file)
+void play_passed_filename(const Settings& settings, const std::string& path_to_file)
 {
 	play_video(settings.VIDEO_PLAYER, path_to_file);
 	Path p;
@@ -38,7 +38,7 @@ void play_passed_filename(Settings settings, const std::string& path_to_file)
 	}
 }
 
-void play_next_from_dir(Settings settings, const std::string& working_dir)
+void play_next_from_dir(const Settings& settings, const std::string& working_dir)
 {
 	Path p;
 	std::string last_played_path = working_dir + "/" + get_first_element_otherwise_empty(readfile(working_dir + "/.tracker"));
@@ -51,7 +51,7 @@ void play_next_from_dir(Settings settings, const std::string& working_dir)
 	show.add_to_history_file();
 }
 
-void launch_menu(Settings settings)
+void launch_menu(const Settings& settings)
 {
 	const std::map<int, Show>& showmap = create_shows(settings);
 	size_t list_length = showmap.size();

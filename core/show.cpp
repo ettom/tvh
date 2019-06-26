@@ -9,11 +9,6 @@ std::string find_last_played(const std::string& last_season_dir)
 	return get_first_element_otherwise_empty(lines);
 }
 
-Show::Show()
-{
-}
-
-
 Show::Show(const Settings& s, const Path& p) :
 
 	settings{s},

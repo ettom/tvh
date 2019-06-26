@@ -17,7 +17,6 @@ std::string find_last_played(const std::string&);
 class Show
 {
 	public:
-		Show();
 		Show(const Settings& s, const Path& p);
 
 		std::string get_series_name();
