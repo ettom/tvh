@@ -62,11 +62,12 @@ cp app/tvh ~/.local/bin/tvh
 
 ## Naming scheme
 By default, `tvh` expects your tv show directories to be structured as follows:
-`series_name/season_number/episode_file`. A season directory is not necessarily
-required, all the episodes can just be placed into the `series_name` directory.
+`series_name/season_number/episode_file`. It's not required to have a separate season
+directory, **if** the show only has one season. In that case, all the episodes can just
+be placed into the `series_name` directory.
 
 Season directories and episodes should follow a naming scheme: <br/>
-• Season directory names have to *start* with `S{season number:00}` eg. `S01`, `S10` <br/>
-• Episode filenames have to *contain* `E{episode number:00}` eg. `S01E01`, `E01`, `S10E10`, `E10` <br/>
+• Season directory names have to **start** with `S{season number:00}` eg. `S01`, `S10` <br/>
+• Episode filenames have to **contain** `E{episode number:00}` eg. `S01E01`, `E01`, `S10E10`, `E10` <br/>
 
 This is currently not configurable, but hopefully will be in the future.
