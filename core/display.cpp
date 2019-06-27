@@ -125,8 +125,7 @@ void Display::draw_window()
 	std::string next_ep_path;
 
 	char item[NAME_MAX];
-	int ch = 0;
-	size_t i = 0;
+	int ch, i = 0;
 	startup();
 
 	while((ch = wgetch(w))){
@@ -137,11 +136,11 @@ void Display::draw_window()
 		case KEY_LEFT: case 'h': case 'q':
 			goto exit_loop;
 		case KEY_UP: case 'k':
-			i--;
+			--i;
 			i = (i < 0) ? this->show_names_length - 1 : i;
 			break;
 		case KEY_DOWN: case 'j':
-			i++;
+			++i;
 			i = (i > this->show_names_length - 1) ? 0 : i;
 			break;
 		case KEY_RIGHT: case 'l':
