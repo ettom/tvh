@@ -1,20 +1,19 @@
-#include <iostream>
 #include <string>
 #include <vector>
-#include <map>
-#include <regex>
+#include <locale.h>
 
 #include <ncurses.h>
 
-#include "show.h"
-#include "helpers.h"
-#include "display.h"
 #include "init.h"
 #include "filesystem.h"
+#include "config.h"
+#include "helpers.h"
+
 
 
 int main(int argc, char *argv[])
 {
+	setlocale(LC_ALL, ""); // Locale should be set correctly on the host machine
 	Settings settings;
 
 	std::string env_HOME = std::getenv("HOME");
