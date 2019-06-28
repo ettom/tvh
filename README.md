@@ -2,7 +2,7 @@
 Keep track of your tv shows.
 
 `tvh` is a simple ncurses program for keeping track of your tv show episodes. It
-works by creating a .`tracker` file containing the last watched episode in every tv
+works by creating a `.tracker` file containing the last watched episode in every tv
 show directory. It also keeps a log of the last watched shows.
 
 ## Usage
@@ -40,11 +40,11 @@ Dependencies:
 ```
 cmake
 g++-8
-ncurses
+ncursesw
 ```
 
 For Ubuntu 18.04 all dependencies can be installed with this command:<br/>
-`sudo apt install cmake g++-8 libncurses5-dev`<br/>
+`sudo apt install cmake g++-8 libncursesw5-dev`<br/>
 It also might be necessary to set g++-8 as the default C++ compiler. On Ubuntu this
 can be done with:<br/>
 `sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 60`
