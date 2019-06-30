@@ -1,6 +1,7 @@
 #include "helpers.h"
 
-std::string remove_extension(const std::string& filename) {
+std::string remove_extension(const std::string& filename)
+{
 	size_t lastdot = filename.find_last_of(".");
 	if (lastdot == std::string::npos)
 		return filename;

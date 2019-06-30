@@ -39,14 +39,17 @@ void play_passed_filename(const Settings& settings, const std::string& path_to_f
 void play_next_from_dir(const Settings& settings, const std::string& working_dir)
 {
 	Path p;
-	std::string last_played_path = working_dir + "/" + get_first_element_otherwise_empty(readfile(working_dir + "/.tracker"));
-	p.last_played_ep = last_played_path;
+	p.last_played_ep = working_dir + "/" + get_first_element_otherwise_empty(readfile(working_dir + "/.tracker"));
+	p.last_season_dir = get_parent_dir(p.last_played_ep);
 	Show show(settings, p);
 	show.set_season_dir(working_dir);
 	show.set_next_ep_path();
-	play_video(settings.VIDEO_PLAYER, show.get_next_ep_path());
-	show.add_to_tracker_file();
-	show.add_to_history_file();
+	std::string next_ep_path = show.get_next_ep_path();
+	if (! next_ep_path.empty()) {
+		play_video(settings.VIDEO_PLAYER, show.get_next_ep_path());
+		show.add_to_tracker_file();
+		show.add_to_history_file();
+	}
 }
 
 void launch_menu(const Settings& settings)
