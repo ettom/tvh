@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 			path_to_file = get_absolute_path(argv[1]);
 			play_passed_filename(settings, path_to_file);
 		} catch (std::runtime_error&) {
-			std::cout << "Cannot access " << argv[1] << " , no such file." << std::endl;
+			std::cerr << "Cannot access " << argv[1] << " , no such file." << std::endl;
 			exit_code = 1;
 		}
 
