@@ -1,8 +1,8 @@
 #include "display.h"
-#define WINDOW_WIDTH 50
+#define WINDOW_WIDTH  50
 #define WINDOW_HEIGHT 7
 #define LINE_START    2
-#define LINE_LENGTH  WINDOW_WIDTH - 2 * LINE_START
+#define LINE_LENGTH   WINDOW_WIDTH - 2 * LINE_START
 
 Display::Display(const Settings& s, const std::vector<Show>& l, size_t n) :
 	settings{s},
@@ -53,12 +53,9 @@ void Display::display_next_ep_name(int current_pos)
 void Display::print_menu(int to_highlight)
 {
 	size_t i = 0;
-	char item[NAME_MAX]; // Max filename length, probably 255
-
 	for(i = 0; i < this->show_names_length; ++i) {
 		(i == to_highlight) ? wattron(w, A_STANDOUT) : wattroff(w, A_STANDOUT);
-		sprintf(item, "%-7s",  this->show_names.at(i).c_str());
-		mvwprintw(w, i + 1, LINE_START, "%s", item);
+		mvwprintw(w, i + 1, LINE_START, "%s", show_names.at(i).c_str());
 	}
 
 	wattroff(w, A_STANDOUT);
@@ -67,7 +64,6 @@ void Display::print_menu(int to_highlight)
 
 char Display::clear_and_print(const std::string& toprint)
 {
-	char item[NAME_MAX];
 	wclear(w);
 	box(w, 0, 0);
 	char ch;
@@ -78,8 +74,6 @@ char Display::clear_and_print(const std::string& toprint)
 	do {
 		for (auto i : lines) {
 			std::string line = center_string(i, LINE_LENGTH);
-			// char item[NAME_MAX] = {0};
-			// sprintf(item, "%-7s", line.c_str());
 			mvwprintw(w, linenr, LINE_START, "%s", line.c_str());
 			++linenr;
 		}
@@ -134,13 +128,11 @@ void Display::draw_window()
 {
 	std::string next_ep_path;
 
-	char item[NAME_MAX];
 	int ch, i = 0;
 	startup();
 
 	while((ch = wgetch(w))){
-		sprintf(item, "%-7s", show_names.at(i).c_str()); // Right pad with spaces to make the items appear with even width.
-		mvwprintw(w, i + 1, LINE_START, "%s", item);
+		mvwprintw(w, i + 1, LINE_START, "%s", show_names.at(i).c_str());
 		// Use a variable to increment or decrement the value based on the input.
 		switch(ch) {
 		case KEY_LEFT: case 'h': case 'q':
@@ -196,8 +188,7 @@ void Display::draw_window()
 
 		wattron(w, A_STANDOUT); // Now highlight the next item in the list
 
-		sprintf(item, "%-7s", show_names.at(i).c_str());
-		mvwprintw(w, i + 1, LINE_START, "%s", item);
+		mvwprintw(w, i + 1, LINE_START, "%s", show_names.at(i).c_str());
 		wattroff(w, A_STANDOUT);
 	}
 
