@@ -1,4 +1,8 @@
 #include "display.h"
+#define WINDOW_WIDTH 50
+#define WINDOW_HEIGHT 7
+#define LINE_START    2
+#define LINE_LENGTH  WINDOW_WIDTH - 2 * LINE_START
 
 Display::Display(const Settings& s, const std::vector<Show>& l, size_t n) :
 	settings{s},
@@ -54,27 +58,33 @@ void Display::print_menu(int to_highlight)
 	for(i = 0; i < this->show_names_length; ++i) {
 		(i == to_highlight) ? wattron(w, A_STANDOUT) : wattroff(w, A_STANDOUT);
 		sprintf(item, "%-7s",  this->show_names.at(i).c_str());
-		mvwprintw(w, i + 1, 2, "%s", item);
+		mvwprintw(w, i + 1, LINE_START, "%s", item);
 	}
 
 	wattroff(w, A_STANDOUT);
 }
+
 
 char Display::clear_and_print(const std::string& toprint)
 {
 	char item[NAME_MAX];
 	wclear(w);
 	box(w, 0, 0);
-	char ch ;
+	char ch;
+
+	std::vector<std::string> lines = wrap_string_to_lines(toprint, LINE_LENGTH);
+	int linenr = calc_line_to_start_printing(lines);
 
 	do {
-		ch = 0;
-		sprintf(item, "%-7s", toprint.c_str());
-		mvwprintw(w, 3, 5, "%s", item);
+		for (auto i : lines) {
+			std::string line = center_string(i, LINE_LENGTH);
+			// char item[NAME_MAX] = {0};
+			// sprintf(item, "%-7s", line.c_str());
+			mvwprintw(w, linenr, LINE_START, "%s", line.c_str());
+			++linenr;
+		}
 		ch = wgetch(w);
 	} while (!ch);
-
-	std::cout << ch << std::endl;
 
 	wclear(w);
 	box(w, 0, 0);
@@ -102,16 +112,16 @@ void Display::delete_entry_from_history(const std::string& series_name)
 
 void Display::startup()
 {
-	initscr();               // Initialize Ncurses
-	w = newwin(7, 50, 0, 0); // Create a new window
-	box(w, 0, 0);            // Sets default borders for the window
+	initscr();                                     // Initialize Ncurses
+	w = newwin(WINDOW_HEIGHT, WINDOW_WIDTH, 0, 0); // Create a new window
+	box(w, 0, 0);                                  // Sets default borders for the window
 
-	print_menu(0);           // Print the menu
-	wrefresh(w);             // Update the terminal screen
+	print_menu(0);                                 // Print the menu
+	wrefresh(w);                                   // Update the terminal screen
 
-	noecho();                // Disable echoing of characters on the screen
-	keypad(w, TRUE);         // Enable keyboard input for the window.
-	curs_set(0);             // Hide the default screen cursor.
+	noecho();                                      // Disable echoing of characters on the screen
+	keypad(w, TRUE);                               // Enable keyboard input for the window.
+	curs_set(0);                                   // Hide the default screen cursor.
 }
 
 void Display::cleanup()
@@ -130,7 +140,7 @@ void Display::draw_window()
 
 	while((ch = wgetch(w))){
 		sprintf(item, "%-7s", show_names.at(i).c_str()); // Right pad with spaces to make the items appear with even width.
-		mvwprintw(w, i + 1, 2, "%s", item);
+		mvwprintw(w, i + 1, LINE_START, "%s", item);
 		// Use a variable to increment or decrement the value based on the input.
 		switch(ch) {
 		case KEY_LEFT: case 'h': case 'q':
@@ -187,7 +197,7 @@ void Display::draw_window()
 		wattron(w, A_STANDOUT); // Now highlight the next item in the list
 
 		sprintf(item, "%-7s", show_names.at(i).c_str());
-		mvwprintw(w, i + 1, 2, "%s", item);
+		mvwprintw(w, i + 1, LINE_START, "%s", item);
 		wattroff(w, A_STANDOUT);
 	}
 

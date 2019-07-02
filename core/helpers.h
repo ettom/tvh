@@ -20,3 +20,6 @@ std::vector<std::string> delete_match_from_vector(std::vector<std::string>& inpu
 std::vector<std::string> insert_element_to_first_pos(std::vector<std::string>& input, const std::string& element);
 std::vector<std::string> resize_vector_to_size(std::vector<std::string>& input, int target_size);
 std::string get_first_element_otherwise_empty(const std::vector<std::string>& input);
+std::vector<std::string> wrap_string_to_lines(std::string source, std::size_t width, std::string whitespace = " \t\r");
+int calc_line_to_start_printing(std::vector<std::string> lines);
+std::string center_string(const std::string& s, const int w);

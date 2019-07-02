@@ -169,3 +169,24 @@ TEST(Helpers, givenVectorWithMultipleElements_callingGetFirstElementOtherwiseEmp
 	// ASSERT
 	ASSERT_EQ(result, "1");
 }
+
+TEST(Helpers, givenStringAndLineLength_callingWrapStringToLines_mustReturnLinesNoLongerThanGivenLength){
+	// ARRANGE
+	std::string input = "Lorem ipsum dolor sit";
+	size_t max_line_length = 10;
+
+	std::vector<std::string> expected {
+		"Lorem",
+		"ipsum",
+		"dolor sit",
+	};
+
+
+	// ACT
+	std::vector<std::string> result = wrap_string_to_lines(input, max_line_length);
+
+	// ASSERT
+	ASSERT_EQ(result.at(0), expected.at(0));
+	ASSERT_EQ(result.at(1), expected.at(1));
+	ASSERT_EQ(result.at(2), expected.at(2));
+}

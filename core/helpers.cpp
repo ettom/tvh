@@ -136,3 +136,56 @@ std::string get_first_element_otherwise_empty(const std::vector<std::string>& in
 		return input.at(0);
 	return "";
 }
+
+std::vector<std::string> wrap_string_to_lines(std::string source, std::size_t width, std::string whitespace)
+{
+	std::size_t curr_index = width - 1;
+	std::size_t size_to_elim;
+	while (curr_index < source.length()) {
+		curr_index = source.find_last_of(whitespace,curr_index + 1);
+		if (curr_index == std::string::npos)
+			break;
+		curr_index = source.find_last_not_of(whitespace,curr_index);
+		if (curr_index == std::string::npos)
+			break;
+		size_to_elim = source.find_first_not_of(whitespace,curr_index + 1) - curr_index - 1;
+		source.replace( curr_index + 1, size_to_elim , "\n");
+		curr_index += (width + 1); //due to the recently inserted "\n"
+	}
+
+	std::vector<std::string> result;
+	std::stringstream ss(source);
+	std::string to;
+
+	while (std::getline(ss, to, '\n')) {
+		result.push_back(to);
+	}
+
+	return result;
+}
+
+int calc_line_to_start_printing(std::vector<std::string> lines)
+{
+	int linenr = 1;
+	switch (lines.size()) {
+	case 1: case 2:
+		linenr = 3;
+		break;
+	case 3:
+		linenr = 2;
+		break;
+	}
+	return linenr;
+}
+
+std::string center_string(const std::string& s, const int w)
+{
+	std::stringstream ss, spaces;
+	int pad = w - s.size();                  // count excess room to pad
+	for(int i = 0; i < pad / 2; ++i)
+		spaces << " ";
+	ss << spaces.str() << s << spaces.str(); // format with padding
+	if(pad > 0 && pad % 2 != 0)              // if pad odd #, add 1 more space
+		ss << " ";
+	return ss.str();
+}
