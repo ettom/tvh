@@ -16,10 +16,10 @@ std::vector<std::string> find_matches_in_vector(const std::vector<std::string>& 
 std::vector<std::string> filter_filenames_by_extension(const std::vector<std::string>& filenames, const std::vector<std::string>& EXTENSIONS_TO_IGNORE);
 bool ends_in(const std::string& filename, const std::vector<std::string>& endings);
 
-std::vector<std::string> delete_match_from_vector(std::vector<std::string>& input, const std::regex& to_match);
 std::vector<std::string> insert_element_to_first_pos(std::vector<std::string>& input, const std::string& element);
 std::vector<std::string> resize_vector_to_size(std::vector<std::string>& input, int target_size);
 std::string get_first_element_otherwise_empty(const std::vector<std::string>& input);
 std::vector<std::string> wrap_string_to_lines(std::string source, std::size_t width, std::string whitespace = " \t\r");
 int calc_line_to_start_printing(std::vector<std::string> lines);
 std::string center_string(const std::string& s, const int w);
+std::vector<std::string> delete_match_from_vector(std::vector<std::string> input, const std::string& match);

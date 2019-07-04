@@ -89,7 +89,7 @@ char Display::clear_and_print(const std::string& toprint)
 void Display::delete_entry_from_menu(int current_pos)
 {
 	all_shows.erase(all_shows.begin() + current_pos);
-	this->show_names_length -= 1;
+	--this->show_names_length;
 	this->show_names = format_lines();
 	wclear(w);
 	box(w, 0, 0);
@@ -98,8 +98,7 @@ void Display::delete_entry_from_menu(int current_pos)
 void Display::delete_entry_from_history(const std::string& series_name)
 {
 	std::vector<std::string> history_contents = readfile(this->settings.TV_HISTORY_FILE);
-	std::regex rgx = std::regex(".*" + series_name + ".*");
-	history_contents = delete_match_from_vector(history_contents, rgx);
+	history_contents = delete_match_from_vector(history_contents, series_name);
 	write_file(this->settings.TV_HISTORY_FILE, history_contents);
 
 }

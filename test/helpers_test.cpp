@@ -124,15 +124,20 @@ TEST(Helpers, givenVectorAndTargetSize_callingResizeVectorToSize_mustReturnVecto
 
 TEST(Helpers, givenVectorAndRegex_callingDeleteMatchFromRegex_mustReturnVectorWithMatchingElementsRemoved){
 	// ARRANGE
-	std::regex rgx("a");
-	std::vector<std::string> input_vector {"a", "b", "c", "d"};
-	std::vector<std::string> expected_result {"b", "c", "d"};
+	std::string match1 = "a";
+	std::vector<std::string> input1 {"a", "b", "c", "d"};
+	std::vector<std::string> expected1 {"b", "c", "d"};
 
-	// ACT
-	std::vector<std::string> result = delete_match_from_vector(input_vector, rgx);
+	std::string match2 = "myshow1";
+	std::vector<std::string> input2 = { "myshow1 w'ith (parentheses)", "myshow2" };
+	std::vector<std::string> expected2 { "myshow2" };
+
+	std::vector<std::string> result1 = delete_match_from_vector(input1, match1);
+	std::vector<std::string> result2 = delete_match_from_vector(input2, match2);
 
 	// ASSERT
-	ASSERT_EQ(result, expected_result);
+	ASSERT_EQ(result1, expected1);
+	ASSERT_EQ(result2, expected2);
 }
 
 TEST(Helpers, givenVectorAndElement_callingInsertElementToFirstPos_mustReturnVectorWithElementOnFirstPositon){

@@ -112,12 +112,13 @@ std::vector<std::string> resize_vector_to_size(std::vector<std::string>& input, 
 	return input;
 }
 
-std::vector<std::string> delete_match_from_vector(std::vector<std::string>& input, const std::regex& rgx)
+std::vector<std::string> delete_match_from_vector(std::vector<std::string> input, const std::string& match)
 {
 	std::string to_delete = "";
 	for (std::string line : input) {
-		if (std::regex_match(line, rgx))
+		if (line.find(match) != std::string::npos) {
 			to_delete = line;
+		}
 	}
 	input.erase(std::remove(input.begin(), input.end(), to_delete), input.end());
 	return input;

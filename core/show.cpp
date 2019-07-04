@@ -145,8 +145,8 @@ void Show::add_to_history_file()
 {
 	std::vector<std::string> history_contents = readfile(this->settings.TV_HISTORY_FILE); // Read the current file contents
 
-	std::regex rgx = std::regex(".*" + this->series_name + ".*");
-	history_contents = delete_match_from_vector(history_contents, rgx);
+	// std::regex rgx = std::regex(".*" + this->series_name + ".*");
+	history_contents = delete_match_from_vector(history_contents, this->series_name);
 	history_contents = insert_element_to_first_pos(history_contents, this->next_season_dir);
 	history_contents = resize_vector_to_size(history_contents, this->settings.HISTORY_SIZE);
 	write_file(this->settings.TV_HISTORY_FILE, history_contents);
