@@ -2,5 +2,5 @@
 compile_commands.json
 *.swp
 build
-createlib/
+.clangd
 gui/

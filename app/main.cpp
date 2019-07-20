@@ -1,6 +1,6 @@
 #include <string>
 #include <vector>
-#include <locale.h>
+#include <clocale>
 
 #include <ncurses.h>
 
