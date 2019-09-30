@@ -56,8 +56,8 @@ git clone https://github.com/ettom/tvh.git
 cd tvh
 mkdir build && cd build
 cmake ..
-cmake --build .
-cp app/tvh ~/.local/bin/tvh
+make
+sudo make install
 ```
 
 ## Naming scheme
