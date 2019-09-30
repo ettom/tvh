@@ -35,11 +35,11 @@ Additionally you can change the other fields to match your setup and needs. Thes
 pretty self-explanatory.
 
 ## Building
-Dependencies:
+### Dependencies:
+A compiler with C++17 support (including support for the `filesystem` library) ([clang-7+](http://llvm.org/releases/download.html),
+[gcc-8+](https://gcc.gnu.org/releases.html)), [cmake 3.6+](https://cmake.org/download/), [git](https://git-scm.com/downloads)
 
 ```
-cmake
-g++-8
 ncursesw
 ```
 
@@ -49,7 +49,7 @@ It also might be necessary to set g++-8 as the default C++ compiler. On Ubuntu t
 can be done with:<br/>
 `sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 60`
 
-Installation:
+### Installation:
 
 ```
 git clone https://github.com/ettom/tvh.git
