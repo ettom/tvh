@@ -2,14 +2,10 @@
 #include <vector>
 #include <clocale>
 
-#include <ncurses.h>
-
 #include "init.h"
 #include "filesystem.h"
 #include "config.h"
 #include "helpers.h"
-
-
 
 int main(int argc, char *argv[])
 {
@@ -28,7 +24,7 @@ int main(int argc, char *argv[])
 		try {
 			path_to_file = get_absolute_path(argv[1]);
 			play_passed_filename(settings, path_to_file);
-		} catch (std::runtime_error&) {
+		} catch (const std::runtime_error&) {
 			std::cerr << "Cannot access " << argv[1] << " , no such file." << std::endl;
 			exit_code = 1;
 		}
@@ -37,7 +33,7 @@ int main(int argc, char *argv[])
 		std::string working_dir = std::filesystem::current_path();
 		std::vector<std::string> dir_contents = lsdir(working_dir);
 
-		if (! find_matches_in_vector(dir_contents, ".tracker").empty()) {	// Dir contains .tracker file
+		if (! find_matches_in_vector(dir_contents, ".tracker").empty()) { // Dir contains .tracker file
 			exit_code = play_next_from_dir(settings, working_dir);
 		} else {
 			launch_menu(settings);

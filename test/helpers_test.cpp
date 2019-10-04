@@ -2,7 +2,8 @@
 #include <gtest/gtest.h>
 
 
-TEST(Helpers, givenFileName_callingRemoveExtension_mustReturnFileNameWithOutExtension){
+TEST(Helpers, givenFileName_callingRemoveExtension_mustReturnFileNameWithOutExtension)
+{
 	// ARRANGE
 	std::string filename = "file.txt";
 
@@ -14,7 +15,8 @@ TEST(Helpers, givenFileName_callingRemoveExtension_mustReturnFileNameWithOutExte
 }
 
 
-TEST(Helpers, givenFilePath_callingReverseFilePath_mustReturnReversedFilePath){
+TEST(Helpers, givenFilePath_callingReverseFilePath_mustReturnReversedFilePath)
+{
 	// ARRANGE
 	std::string file_path = "/home/mypath/file.txt";
 
@@ -27,7 +29,8 @@ TEST(Helpers, givenFilePath_callingReverseFilePath_mustReturnReversedFilePath){
 }
 
 
-TEST(Helpers, givenDigit_callingCalculateNext_mustReturnDigitPlusOneWithALeadingZeroUnlessDigitWas9){
+TEST(Helpers, givenDigit_callingCalculateNext_mustReturnDigitPlusOneWithALeadingZeroUnlessDigitWas9)
+{
 	// ARRANGE
 	int number1 = 0;
 	int number2 = 1;
@@ -44,7 +47,8 @@ TEST(Helpers, givenDigit_callingCalculateNext_mustReturnDigitPlusOneWithALeading
 	ASSERT_EQ(result3, "10");
 }
 
-TEST(Helpers, givenAStringAndRegex_callingExtractSubstring_mustReturnMatchingSubstring){
+TEST(Helpers, givenAStringAndRegex_callingExtractSubstring_mustReturnMatchingSubstring)
+{
 	// ARRANGE
 	std::string input = "some_test_string";
 	std::regex rgx = std::regex("_(.*)_");
@@ -56,7 +60,8 @@ TEST(Helpers, givenAStringAndRegex_callingExtractSubstring_mustReturnMatchingSub
 	ASSERT_EQ(result, "test");
 }
 
-TEST(Helpers, givenFilenameAndAVectorOfExtensions_callingEndsIn_mustReturnTrueIfFilenameEndsInOneOfTheGivenExtensions){
+TEST(Helpers, givenFilenameAndAVectorOfExtensions_callingEndsIn_mustReturnTrueIfFilenameEndsInOneOfTheGivenExtensions)
+{
 	// ARRANGE
 	std::string filename = "file.txt";
 	std::vector<std::string> extensions {"cpp", "sh", "txt"};
@@ -69,7 +74,8 @@ TEST(Helpers, givenFilenameAndAVectorOfExtensions_callingEndsIn_mustReturnTrueIf
 }
 
 
-TEST(Helpers, givenReversedPathAsVector_callingExtractSeriesNameSeason_mustReturnTupleOfSeriesNameAndSeasonNumber){
+TEST(Helpers, givenReversedPathAsVector_callingExtractSeriesNameSeason_mustReturnTupleOfSeriesNameAndSeasonNumber)
+{
 	// ARRANGE
 	std::vector<std::string> input {"S01", "myshow", "shows"};
 	Settings settings;
@@ -83,7 +89,8 @@ TEST(Helpers, givenReversedPathAsVector_callingExtractSeriesNameSeason_mustRetur
 }
 
 
-TEST(Helpers, givenVectorAndString_callingFindMatchesInVector_mustReturnAllMatchingElements){
+TEST(Helpers, givenVectorAndString_callingFindMatchesInVector_mustReturnAllMatchingElements)
+{
 	// ARRANGE
 	std::vector<std::string> input_vector {"abc", "aabc", "def", "ghi"};
 	std::string to_search = "a";
@@ -96,7 +103,8 @@ TEST(Helpers, givenVectorAndString_callingFindMatchesInVector_mustReturnAllMatch
 	ASSERT_EQ(result, expected_result);
 }
 
-TEST(Helpers, givenVectorOfFilenamesAndVectorOfExtensionsToIgnore_callingFilterFilenamesByExtension_mustReturnVectorOfFilenamesWithMatchingElementsRemoved){
+TEST(Helpers, givenVectorOfFilenamesAndVectorOfExtensionsToIgnore_callingFilterFilenamesByExtension_mustReturnVectorOfFilenamesWithMatchingElementsRemoved)
+{
 	// ARRANGE
 	std::vector<std::string> filenames {"myfile.txt", "myfile.sh", "myfile.cpp", "myfile.h"};
 	std::vector<std::string> extensions_to_ignore {"txt", "sh"};
@@ -109,7 +117,8 @@ TEST(Helpers, givenVectorOfFilenamesAndVectorOfExtensionsToIgnore_callingFilterF
 	ASSERT_EQ(result, expected_result);
 }
 
-TEST(Helpers, givenVectorAndTargetSize_callingResizeVectorToSize_mustReturnVectorWithMaxSizeOfTarget){
+TEST(Helpers, givenVectorAndTargetSize_callingResizeVectorToSize_mustReturnVectorWithMaxSizeOfTarget)
+{
 	// ARRANGE
 	int target_size = 3;
 	std::vector<std::string> input_vector {"a", "b", "c", "d"};
@@ -122,7 +131,8 @@ TEST(Helpers, givenVectorAndTargetSize_callingResizeVectorToSize_mustReturnVecto
 	ASSERT_EQ(result, expected_result);
 }
 
-TEST(Helpers, givenVectorAndRegex_callingDeleteMatchFromRegex_mustReturnVectorWithMatchingElementsRemoved){
+TEST(Helpers, givenVectorAndRegex_callingDeleteMatchFromRegex_mustReturnVectorWithMatchingElementsRemoved)
+{
 	// ARRANGE
 	std::string match1 = "a";
 	std::vector<std::string> input1 {"a", "b", "c", "d"};
@@ -140,7 +150,8 @@ TEST(Helpers, givenVectorAndRegex_callingDeleteMatchFromRegex_mustReturnVectorWi
 	ASSERT_EQ(result2, expected2);
 }
 
-TEST(Helpers, givenVectorAndElement_callingInsertElementToFirstPos_mustReturnVectorWithElementOnFirstPositon){
+TEST(Helpers, givenVectorAndElement_callingInsertElementToFirstPos_mustReturnVectorWithElementOnFirstPositon)
+{
 	// ARRANGE
 	std::string element = "8";
 	std::vector<std::string> input_vector {"1", "2", "3", "4"};
@@ -153,7 +164,8 @@ TEST(Helpers, givenVectorAndElement_callingInsertElementToFirstPos_mustReturnVec
 	ASSERT_EQ(result, expected_result);
 }
 
-TEST(Helpers, givenEmptyVector_callingGetFirstElementOtherwiseEmpty_mustReturnEmptyString){
+TEST(Helpers, givenEmptyVector_callingGetFirstElementOtherwiseEmpty_mustReturnEmptyString)
+{
 	// ARRANGE
 	std::vector<std::string> input_vector {};
 
@@ -164,7 +176,8 @@ TEST(Helpers, givenEmptyVector_callingGetFirstElementOtherwiseEmpty_mustReturnEm
 	ASSERT_EQ(result, "");
 }
 
-TEST(Helpers, givenVectorWithMultipleElements_callingGetFirstElementOtherwiseEmpty_mustReturnFirstElement){
+TEST(Helpers, givenVectorWithMultipleElements_callingGetFirstElementOtherwiseEmpty_mustReturnFirstElement)
+{
 	// ARRANGE
 	std::vector<std::string> input_vector {"1", "2", "3", "4"};
 
@@ -175,7 +188,8 @@ TEST(Helpers, givenVectorWithMultipleElements_callingGetFirstElementOtherwiseEmp
 	ASSERT_EQ(result, "1");
 }
 
-TEST(Helpers, givenStringAndLineLength_callingWrapStringToLines_mustReturnLinesNoLongerThanGivenLength){
+TEST(Helpers, givenStringAndLineLength_callingWrapStringToLines_mustReturnLinesNoLongerThanGivenLength)
+{
 	// ARRANGE
 	std::string input = "Lorem ipsum dolor sit";
 	size_t max_line_length = 10;

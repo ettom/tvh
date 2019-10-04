@@ -18,13 +18,14 @@ std::vector<std::string> Display::format_lines()
 	for (auto show : this->all_shows) {
 		std::string show_names_entry = show.get_series_name();
 		show_names_entry += " - ";
-		show_names_entry += show.get_season_number();                          // Add the series name and season number together
+		show_names_entry += show.get_season_number();        // Add the series name and season number together
 
 		int current_line_length = show_names_entry.length();
-		if (max_line_length < current_line_length)
-			this->max_line_length = current_line_length;                   // Store the length of the longest line
+		if (max_line_length < current_line_length) {
+			this->max_line_length = current_line_length; // Store the length of the longest line
+		}
 
-		result.push_back(show_names_entry);                                    // Append series name + season number to vector
+		result.push_back(show_names_entry);                  // Append series name + season number to vector
 	}
 
 	return result;
@@ -32,28 +33,31 @@ std::vector<std::string> Display::format_lines()
 
 void Display::display_last_played_ep_name(int current_pos)
 {
-	std::string last_played = remove_extension(all_shows.at(current_pos).get_last_played_file()); // Get the name of the last played episode without extension
-	char ch = clear_and_print(last_played);
-	if (ch == 'f')
+	std::string last_played_without_extension = remove_extension(all_shows.at(current_pos).get_last_played_file());
+	char ch = clear_and_print(last_played_without_extension);
+	if (ch == 'f') {
 		open_dir_in_file_manager(settings.FILE_MANAGER, all_shows.at(current_pos).get_last_season_dir());
+	}
 }
 
 
 void Display::display_next_ep_name(int current_pos)
 {
-	std::string next_up = remove_extension(all_shows.at(current_pos).get_next_ep_name()); // Get the name of the next episode without extension
-	if (next_up == "")
-		next_up = "Next episode not found!";
+	std::string next_up_without_extension = remove_extension(all_shows.at(current_pos).get_next_ep_name());
+	if (next_up_without_extension.empty()) {
+		next_up_without_extension = "Next episode not found!";
+	}
 
-	char ch = clear_and_print(next_up);
-	if (ch == 'f')
+	char ch = clear_and_print(next_up_without_extension);
+	if (ch == 'f') {
 		open_dir_in_file_manager(settings.FILE_MANAGER, all_shows.at(current_pos).get_next_season_dir());
+	}
 }
 
 void Display::print_menu(int to_highlight)
 {
 	size_t i = 0;
-	for(i = 0; i < this->show_names_length; ++i) {
+	for (i = 0; i < this->show_names_length; ++i) {
 		(i == to_highlight) ? wattron(w, A_STANDOUT) : wattroff(w, A_STANDOUT);
 		mvwprintw(w, i + 1, LINE_START, "%s", show_names.at(i).c_str());
 	}
@@ -130,24 +134,29 @@ void Display::draw_window()
 	int ch, i = 0;
 	startup();
 
-	while((ch = wgetch(w))){
+	while ((ch = wgetch(w))) {
 		mvwprintw(w, i + 1, LINE_START, "%s", show_names.at(i).c_str());
 		// Use a variable to increment or decrement the value based on the input.
-		switch(ch) {
-		case KEY_LEFT: case 'h': case 'q':
+		switch (ch) {
+		case KEY_LEFT:
+		case 'h':
+		case 'q':
 			goto exit_loop;
-		case KEY_UP: case 'k':
+		case KEY_UP:
+		case 'k':
 			--i;
 			i = (i < 0) ? this->show_names_length - 1 : i;
 			break;
-		case KEY_DOWN: case 'j':
+		case KEY_DOWN:
+		case 'j':
 			++i;
 			i = (i > this->show_names_length - 1) ? 0 : i;
 			break;
-		case KEY_RIGHT: case 'l':
+		case KEY_RIGHT:
+		case 'l':
 			all_shows.at(i).set_next_ep_path();
 			next_ep_path = all_shows.at(i).get_next_ep_path();
-			if (next_ep_path == "") {
+			if (next_ep_path.empty()) {
 				clear_and_print("Next episode not found!");
 				print_menu(i);
 				continue;
@@ -158,8 +167,8 @@ void Display::draw_window()
 			}
 			goto exit_loop;
 		case 'p':
-			display_last_played_ep_name(i); // Display the name of the last played episode
-			print_menu(i);                  // Display the menu again
+			display_last_played_ep_name(i);
+			print_menu(i);
 			continue;
 			break;
 
@@ -191,6 +200,7 @@ void Display::draw_window()
 		wattroff(w, A_STANDOUT);
 	}
 
-exit_loop: ;
-	   cleanup();
+exit_loop:
+	;
+	cleanup();
 }

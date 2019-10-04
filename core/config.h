@@ -4,8 +4,7 @@
 #include <vector>
 #include <regex>
 
-struct Settings
-{
+struct Settings {
 	size_t HISTORY_SIZE = 5;
 	std::string TV_HISTORY_FILE = "/.local/share/tvhistory"; // relative to $HOME
 	std::string VIDEO_PLAYER = "mpv";
@@ -17,8 +16,7 @@ struct Settings
 	std::regex SEASON_REGEX = std::regex("S([0-9]+)");
 };
 
-struct Path
-{
+struct Path {
 	std::string last_season_dir;
 	std::string last_played_ep;
 	std::string next_ep_path;

@@ -1,7 +1,8 @@
 #include "extcmd.h"
 #include <gtest/gtest.h>
 
-TEST(Extcmd, givenFaultySystemCommand_callingRunExtCmd_mustNotReturn0){
+TEST(Extcmd, givenFaultySystemCommand_callingRunExtCmd_mustNotReturn0)
+{
 	// ARRANGE
 	std::string command = "some_invalid_command";
 
@@ -12,7 +13,8 @@ TEST(Extcmd, givenFaultySystemCommand_callingRunExtCmd_mustNotReturn0){
 	ASSERT_NE(result, 0);
 }
 
-TEST(Extcmd, givenCorrectSystemCommand_callingRunExtCmd_mustReturn0){
+TEST(Extcmd, givenCorrectSystemCommand_callingRunExtCmd_mustReturn0)
+{
 	// ARRANGE
 	std::string command = "date";
 
