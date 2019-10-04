@@ -12,6 +12,12 @@ Display::Display(const Settings& s, const std::vector<Show>& l, size_t n) :
 	this->show_names = format_lines();
 }
 
+Display::~Display()
+{
+	delwin(w);
+	endwin();
+}
+
 std::vector<std::string> Display::format_lines()
 {
 	std::vector<std::string> result;
@@ -121,12 +127,6 @@ void Display::startup()
 	curs_set(0);                                   // Hide the default screen cursor.
 }
 
-void Display::cleanup()
-{
-	delwin(w);
-	endwin();
-}
-
 void Display::draw_window()
 {
 	std::string next_ep_path;
@@ -202,5 +202,4 @@ void Display::draw_window()
 
 exit_loop:
 	;
-	cleanup();
 }

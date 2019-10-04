@@ -17,8 +17,8 @@ class Display
 {
 public:
 	Display(const Settings& settings, const std::vector<Show>& all_shows, size_t show_names_length);
+	~Display();
 	void startup();
-	void cleanup();
 	void draw_window();
 	char clear_and_print(const std::string& toprint);
 private:

@@ -66,7 +66,6 @@ void launch_menu(const Settings& settings)
 	if (all_shows.empty()) {
 		disp.startup();
 		disp.clear_and_print("No shows in history!");
-		disp.cleanup();
 	} else {
 		disp.draw_window();
 	}
