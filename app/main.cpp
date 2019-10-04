@@ -17,17 +17,17 @@ int main(int argc, char *argv[])
 
 	settings.TV_HISTORY_FILE = TV_HISTORY_FILE;
 
-	int exit_code = 0;
+	int exit_code = EXIT_SUCCESS;
 
 	if (argc > 1) { // If a filename is passed
 		std::string path_to_file;
 		try {
 			path_to_file = get_absolute_path(argv[1]);
-			play_passed_filename(settings, path_to_file);
 		} catch (const std::runtime_error&) {
-			std::cerr << "Cannot access " << argv[1] << " , no such file." << std::endl;
-			exit_code = 1;
+			std::cerr << "Cannot open " << argv[1] << "." << std::endl;
+			return EXIT_FAILURE;
 		}
+		play_passed_filename(settings, path_to_file);
 
 	} else {
 		std::string working_dir = std::filesystem::current_path();

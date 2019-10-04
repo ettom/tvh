@@ -44,7 +44,6 @@ std::vector<std::string> lsdir(const std::string& dir_path)
 std::string get_absolute_path(const std::string& path)
 {
 	// Get absolute path and validate it
-	// Throw exception if invalid path
 	auto p = static_cast<std::filesystem::path>(path);
 	std::ifstream test(p);
 	if (!test) {
