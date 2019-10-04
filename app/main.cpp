@@ -39,7 +39,6 @@ int main(int argc, char *argv[])
 				std::cerr << e.what() << std::endl;
 				return EXIT_FAILURE;
 			}
-			play_next_from_dir(settings, working_dir);
 		} else {
 			launch_menu(settings);
 		}
