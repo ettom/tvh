@@ -17,7 +17,6 @@ int main(int argc, char *argv[])
 
 	settings.TV_HISTORY_FILE = TV_HISTORY_FILE;
 
-	int exit_code = EXIT_SUCCESS;
 
 	if (argc > 1) { // If a filename is passed
 		std::string path_to_file;
@@ -34,11 +33,17 @@ int main(int argc, char *argv[])
 		std::vector<std::string> dir_contents = lsdir(working_dir);
 
 		if (! find_matches_in_vector(dir_contents, ".tracker").empty()) { // Dir contains .tracker file
-			exit_code = play_next_from_dir(settings, working_dir);
+			try {
+				play_next_from_dir(settings, working_dir);
+			} catch (const std::runtime_error& e) {
+				std::cerr << e.what() << std::endl;
+				return EXIT_FAILURE;
+			}
+			play_next_from_dir(settings, working_dir);
 		} else {
 			launch_menu(settings);
 		}
 	}
 
-	return exit_code;
+	return EXIT_SUCCESS;
 }

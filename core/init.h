@@ -37,7 +37,7 @@ void play_passed_filename(const Settings& settings, const std::string& path_to_f
 	}
 }
 
-int play_next_from_dir(const Settings& settings, const std::string& working_dir)
+void play_next_from_dir(const Settings& settings, const std::string& working_dir)
 {
 	Path p;
 	p.last_played_ep = working_dir + "/" + get_first_element_otherwise_empty(readfile(working_dir + "/.tracker"));
@@ -48,13 +48,12 @@ int play_next_from_dir(const Settings& settings, const std::string& working_dir)
 	std::string next_ep_path = show.get_next_ep_path();
 
 	if (next_ep_path.empty()) {
-		return EXIT_FAILURE;
-	} else {
-		play_video(settings.VIDEO_PLAYER, show.get_next_ep_path());
-		show.add_to_tracker_file();
-		show.add_to_history_file();
-		return EXIT_SUCCESS;
+		throw std::runtime_error("Couldn't get next episode path!");
 	}
+
+	play_video(settings.VIDEO_PLAYER, show.get_next_ep_path());
+	show.add_to_tracker_file();
+	show.add_to_history_file();
 }
 
 void launch_menu(const Settings& settings)
