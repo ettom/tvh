@@ -1,17 +1,17 @@
 #pragma once
 
+#include <climits>
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
-#include <climits>
 
 #include <ncurses.h>
 
-#include "show.h"
-#include "helpers.h"
 #include "config.h"
 #include "extcmd.h"
+#include "helpers.h"
+#include "show.h"
 
 class Display
 {
@@ -21,6 +21,7 @@ public:
 	void startup();
 	void draw_window();
 	char clear_and_print(const std::string& toprint);
+
 private:
 	Settings settings;
 	size_t show_names_length;
@@ -31,7 +32,7 @@ private:
 	void delete_entry_from_history(const std::string& series_name);
 	std::vector<std::string> format_lines();
 
-	WINDOW *w;
+	WINDOW* w;
 	std::vector<Show> all_shows;
 	std::vector<std::string> show_names;
 	int max_line_length = 0;

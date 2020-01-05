@@ -1,16 +1,14 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include <tuple>
-#include <regex>
 #include <iostream>
 #include <regex>
+#include <string>
+#include <tuple>
+#include <vector>
 
-#include "helpers.h"
 #include "config.h"
 #include "filesystem.h"
-
+#include "helpers.h"
 
 std::string find_last_played(const std::string&);
 

@@ -9,11 +9,11 @@ std::string find_last_played(const std::string& last_season_dir)
 
 Show::Show(const Settings& s, const Path& p) :
 
-	settings{s},
-	last_season_dir{p.last_season_dir},
-	last_played_ep{p.last_played_ep},
-	next_ep_path{p.next_ep_path},
-	next_season_dir{p.next_season_dir}
+	settings {s},
+	last_season_dir {p.last_season_dir},
+	last_played_ep {p.last_played_ep},
+	next_ep_path {p.next_ep_path},
+	next_season_dir {p.next_season_dir}
 {
 	if (this->last_season_dir.empty()) {
 		set_series_name_season(this->next_season_dir);
@@ -25,7 +25,8 @@ Show::Show(const Settings& s, const Path& p) :
 void Show::set_series_name_season(const std::string& path)
 {
 	const std::vector<std::string>& lines = reverse_file_path(path);
-	const std::tuple<std::string, std::string>& name_season = extract_series_name_season(lines, this->settings.SEASON_REGEX);
+	const std::tuple<std::string, std::string>& name_season =
+		extract_series_name_season(lines, this->settings.SEASON_REGEX);
 	this->series_name = std::get<0>(name_season);
 	this->season_number = std::get<1>(name_season);
 }
@@ -34,7 +35,6 @@ void Show::set_season_dir(const std::string& dir)
 {
 	this->last_season_dir = dir;
 }
-
 
 std::string Show::get_series_name()
 {
@@ -78,7 +78,8 @@ std::string Show::find_next_season_dir()
 
 	const std::string& parent_dir = get_parent_dir(this->last_season_dir);
 	const std::vector<std::string>& dir_contents = lsdir(parent_dir);
-	const std::vector<std::string>& dirs_matching_next_season_number = find_matches_in_vector(dir_contents, next_season_number);
+	const std::vector<std::string>& dirs_matching_next_season_number =
+		find_matches_in_vector(dir_contents, next_season_number);
 
 	return get_first_element_otherwise_empty(dirs_matching_next_season_number);
 }
@@ -88,7 +89,8 @@ std::string Show::find_first_ep_in_next_season_dir()
 	this->next_season_dir = find_next_season_dir();
 	std::vector<std::string> dir_contents = lsdir(this->next_season_dir);
 	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, "E01");
-	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->settings.EXTENSIONS_TO_IGNORE);
+	std::vector<std::string> filtered_dir_contents =
+		filter_filenames_by_extension(matches_in_dir, this->settings.EXTENSIONS_TO_IGNORE);
 	return get_first_element_otherwise_empty(filtered_dir_contents);
 }
 
@@ -96,7 +98,8 @@ std::string Show::find_next_ep_in_this_season_dir(const std::string& next_ep_num
 {
 	std::vector<std::string> dir_contents = lsdir(this->last_season_dir);
 	std::vector<std::string> matches_in_dir = find_matches_in_vector(dir_contents, next_ep_number);
-	std::vector<std::string> filtered_dir_contents = filter_filenames_by_extension(matches_in_dir, this->settings.EXTENSIONS_TO_IGNORE);
+	std::vector<std::string> filtered_dir_contents =
+		filter_filenames_by_extension(matches_in_dir, this->settings.EXTENSIONS_TO_IGNORE);
 	return get_first_element_otherwise_empty(filtered_dir_contents);
 }
 
@@ -138,7 +141,8 @@ void Show::add_to_tracker_file()
 
 void Show::add_to_history_file()
 {
-	std::vector<std::string> history_contents = readfile(this->settings.TV_HISTORY_FILE); // Read the current file contents
+	std::vector<std::string> history_contents =
+		readfile(this->settings.TV_HISTORY_FILE); // Read the current file contents
 
 	history_contents = delete_match_from_vector(history_contents, this->series_name);
 	history_contents = insert_element_to_first_pos(history_contents, this->next_season_dir);

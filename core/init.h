@@ -1,9 +1,9 @@
 #pragma once
 
-#include <ncurses.h>
-#include "show.h"
 #include "display.h"
 #include "filesystem.h"
+#include "show.h"
+#include <ncurses.h>
 
 std::vector<Show> create_shows(const Settings& settings)
 {
@@ -28,12 +28,12 @@ void play_passed_filename(const Settings& settings, const std::string& path_to_f
 	Path p;
 
 	std::regex rgx(".*E([0-9]+).*");
-	if (std::regex_match(path_to_file, rgx)) {                // If path is an ep file
+	if (std::regex_match(path_to_file, rgx)) { // If path is an ep file
 		p.next_season_dir = get_parent_dir(path_to_file);
 		p.next_ep_path = path_to_file;
 		Show show(settings, p);
-		show.add_to_tracker_file();                       // Write filename to .tracker file in same dir
-		show.add_to_history_file();                       // Write the dir of the file to the global history file
+		show.add_to_tracker_file(); // Write filename to .tracker file in same dir
+		show.add_to_history_file(); // Write the dir of the file to the global history file
 	}
 }
 

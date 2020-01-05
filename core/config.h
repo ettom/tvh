@@ -1,8 +1,8 @@
 #pragma once
 
+#include <regex>
 #include <string>
 #include <vector>
-#include <regex>
 
 struct Settings {
 	size_t HISTORY_SIZE = 5;

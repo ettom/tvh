@@ -25,7 +25,6 @@ std::vector<std::string> readfile(const std::string& filename)
 	return lines;
 }
 
-
 std::vector<std::string> lsdir(const std::string& dir_path)
 {
 	std::vector<std::string> dir_contents;
@@ -39,7 +38,6 @@ std::vector<std::string> lsdir(const std::string& dir_path)
 
 	return dir_contents;
 }
-
 
 std::string get_absolute_path(const std::string& path)
 {

@@ -1,13 +1,13 @@
+#include <clocale>
 #include <string>
 #include <vector>
-#include <clocale>
 
-#include "init.h"
-#include "filesystem.h"
 #include "config.h"
+#include "filesystem.h"
 #include "helpers.h"
+#include "init.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	setlocale(LC_ALL, ""); // Locale should be set correctly on the host machine
 	Settings settings;
@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
 	std::string TV_HISTORY_FILE = env_HOME + settings.TV_HISTORY_FILE;
 
 	settings.TV_HISTORY_FILE = TV_HISTORY_FILE;
-
 
 	if (argc > 1) { // If a filename is passed
 		std::string path_to_file;
@@ -32,7 +31,7 @@ int main(int argc, char *argv[])
 		std::string working_dir = std::filesystem::current_path();
 		std::vector<std::string> dir_contents = lsdir(working_dir);
 
-		if (! find_matches_in_vector(dir_contents, ".tracker").empty()) { // Dir contains .tracker file
+		if (!find_matches_in_vector(dir_contents, ".tracker").empty()) { // Dir contains .tracker file
 			try {
 				play_next_from_dir(settings, working_dir);
 			} catch (const std::runtime_error& e) {

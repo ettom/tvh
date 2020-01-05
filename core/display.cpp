@@ -5,9 +5,9 @@
 #define LINE_LENGTH   WINDOW_WIDTH - 2 * LINE_START
 
 Display::Display(const Settings& s, const std::vector<Show>& l, size_t n) :
-	settings{s},
-	all_shows{l},
-	show_names_length{n}
+	settings {s},
+	show_names_length {n},
+	all_shows {l}
 {
 	this->show_names = format_lines();
 }
@@ -24,14 +24,14 @@ std::vector<std::string> Display::format_lines()
 	for (auto show : this->all_shows) {
 		std::string show_names_entry = show.get_series_name();
 		show_names_entry += " - ";
-		show_names_entry += show.get_season_number();        // Add the series name and season number together
+		show_names_entry += show.get_season_number(); // Add the series name and season number together
 
 		int current_line_length = show_names_entry.length();
 		if (max_line_length < current_line_length) {
 			this->max_line_length = current_line_length; // Store the length of the longest line
 		}
 
-		result.push_back(show_names_entry);                  // Append series name + season number to vector
+		result.push_back(show_names_entry); // Append series name + season number to vector
 	}
 
 	return result;
@@ -45,7 +45,6 @@ void Display::display_last_played_ep_name(int current_pos)
 		open_dir_in_file_manager(settings.FILE_MANAGER, all_shows.at(current_pos).get_last_season_dir());
 	}
 }
-
 
 void Display::display_next_ep_name(int current_pos)
 {
@@ -71,7 +70,6 @@ void Display::print_menu(int to_highlight)
 	wattroff(w, A_STANDOUT);
 }
 
-
 char Display::clear_and_print(const std::string& toprint)
 {
 	wclear(w);
@@ -93,7 +91,6 @@ char Display::clear_and_print(const std::string& toprint)
 	wclear(w);
 	box(w, 0, 0);
 	return ch;
-
 }
 
 void Display::delete_entry_from_menu(int current_pos)
@@ -110,21 +107,20 @@ void Display::delete_entry_from_history(const std::string& series_name)
 	std::vector<std::string> history_contents = readfile(this->settings.TV_HISTORY_FILE);
 	history_contents = delete_match_from_vector(history_contents, series_name);
 	write_file(this->settings.TV_HISTORY_FILE, history_contents);
-
 }
 
 void Display::startup()
 {
-	initscr();                                     // Initialize Ncurses
+	initscr();				       // Initialize Ncurses
 	w = newwin(WINDOW_HEIGHT, WINDOW_WIDTH, 0, 0); // Create a new window
-	box(w, 0, 0);                                  // Sets default borders for the window
+	box(w, 0, 0);				       // Sets default borders for the window
 
-	print_menu(0);                                 // Print the menu
-	wrefresh(w);                                   // Update the terminal screen
+	print_menu(0); // Print the menu
+	wrefresh(w);   // Update the terminal screen
 
-	noecho();                                      // Disable echoing of characters on the screen
-	keypad(w, TRUE);                               // Enable keyboard input for the window.
-	curs_set(0);                                   // Hide the default screen cursor.
+	noecho();	 // Disable echoing of characters on the screen
+	keypad(w, TRUE); // Enable keyboard input for the window.
+	curs_set(0);	 // Hide the default screen cursor.
 }
 
 void Display::draw_window()
@@ -200,6 +196,5 @@ void Display::draw_window()
 		wattroff(w, A_STANDOUT);
 	}
 
-exit_loop:
-	;
+exit_loop:;
 }
