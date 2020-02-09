@@ -10,9 +10,9 @@ std::string find_last_played(const std::string& last_season_dir)
 Show::Show(const Settings& s, const Path& p) :
 
 	settings {s},
+	next_ep_path {p.next_ep_path},
 	last_season_dir {p.last_season_dir},
 	last_played_ep {p.last_played_ep},
-	next_ep_path {p.next_ep_path},
 	next_season_dir {p.next_season_dir}
 {
 	if (this->last_season_dir.empty()) {
